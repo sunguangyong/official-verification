@@ -1,0 +1,90 @@
+Name: apis
+Host: 0.0.0.0
+Port: 8888
+
+#链路追踪
+Telemetry:
+  Name: go-openapi-order-services-test
+  Endpoint: 172.16.10.110:11800
+  Sampler: 1.0
+  Batcher: skywalking
+
+MarketDetailRedis:
+  Host: 172.16.10.115:6379
+  Pass: Taione999
+
+InstanceRedis:
+  Host: 172.16.10.115:6379
+  Pass: Taione999
+
+AutoConfRedis:
+  Host: 172.16.10.115:6379
+  Pass: Taione999
+
+MarketDepth:
+  Host: 172.16.10.115:6379
+  Pass: Taione999
+
+ExOrder:
+  DataSource: qa_ct_biz56:6FKRRk3NYsyC98ULsbhy@tcp(172.16.10.18:3306)/qa_exchange?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+ExKline:
+  DataSource: qa_ct_biz56:6FKRRk3NYsyC98ULsbhy@tcp(172.16.10.18:3306)/qa_exchange?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+ExUserMysql:
+  DataSource: qa_ct_biz56:6FKRRk3NYsyC98ULsbhy@tcp(172.16.10.18:3306)/qa_exchange?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+ExUserApikeyMysql:
+  DataSource: qa_ct_biz56:6FKRRk3NYsyC98ULsbhy@tcp(172.16.10.18:3306)/qa_exchange?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+ExActiveOrder:
+  DataSource: qa_ct_biz56:6FKRRk3NYsyC98ULsbhy@tcp(172.16.10.18:3306)/qa_exchange?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+ExAccount:
+  DataSource: qa_ct_biz56:6FKRRk3NYsyC98ULsbhy@tcp(172.16.10.18:3306)/qa_exchange?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+ExTrade:
+  DataSource: qa_ct_biz56:6FKRRk3NYsyC98ULsbhy@tcp(172.16.10.18:3306)/qa_exchange?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+Transaction:
+  DataSource: qa_ct_biz56:6FKRRk3NYsyC98ULsbhy@tcp(172.16.10.18:3306)/qa_exchange?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+HistoryTransaction:
+  DataSource: qa_ct_biz56:6FKRRk3NYsyC98ULsbhy@tcp(172.16.10.18:3306)/qa_exchange?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+ApiTransBlack:
+  DataSource: qa_ct_biz56:6FKRRk3NYsyC98ULsbhy@tcp(172.16.10.18:3306)/qa_exchange?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+ExFee:
+  DataSource: qa_ct_biz56:6FKRRk3NYsyC98ULsbhy@tcp(172.16.10.18:3306)/qa_exchange?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+MarketAccount:
+  DataSource: qa_ct_biz56:6FKRRk3NYsyC98ULsbhy@tcp(172.16.10.18:3306)/qa_exchange?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+MongoOrderEvent:
+  Url: 172.16.10.118:27017/exchange
+  Collection: trade_history
+
+MongoExOrder:
+  Url: 172.16.10.118:27017/exchange
+  Collection: order_history
+
+MongoExTradeHistory:
+  Url: 172.16.10.118:27017/exchange
+  Collection: trade_history
+
+SymbolConfigServiceAll:
+  Host: http://172.16.10.70:30014
+  Path: inner/coinSymbolConfigApi/queryCoinSymbolConfigPageByPageParam
+
+SymbolConfigServiceSingle:
+  Host: http://172.16.10.70:30014
+  Path: inner/coinSymbolConfigApi/selectCoinSymbolConfigByCoinSymbol
+
+AccountTypeServiceAll:
+  Host: http://172.16.10.70:30014
+  Path: inner/coinAccountConfigApi/queryPageCoinSymbolAccountCompany
+
+CoinConfServiceAll:
+  Host: http://172.16.10.70:30014
+  Path: inner/multiplyCoinApi/queryPageMultiplyCoin

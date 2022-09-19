@@ -1,0 +1,19 @@
+Name: apis
+Host: 0.0.0.0
+Port: 8888
+
+SymbolConfigServiceAll:
+  Host: http://172.16.10.70:30014
+  Path: inner/coinSymbolConfigApi/queryCoinSymbolConfigPageByPageParam
+
+SymbolConfigServiceSingle:
+  Host: http://172.16.10.70:30014
+  Path: inner/coinSymbolConfigApi/selectCoinSymbolConfigByCoinSymbol
+
+AccountTypeServiceAll:
+  Host: http://172.16.10.70:30014
+  Path: inner/coinAccountConfigApi/queryPageCoinSymbolAccountCompany
+
+CoinConfServiceAll:
+  Host: http://172.16.10.70:30014
+  Path: inner/multiplyCoinApi/queryPageMultiplyCoin

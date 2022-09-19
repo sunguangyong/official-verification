@@ -1,0 +1,30 @@
+info(
+	title: "官方认证"
+	desc: "官方认证"
+	author: "sunguangyong"
+	email: "sunguangyong@cointiger.com"
+	version: "v1"
+)
+
+type (
+	AddVerifyRequest {
+		VerifyType string   `json:"verify_type"`
+		VerifyInfo []string `json:"verify_info"`
+		JobTiele   string   `json:"job_tiele"`
+		IsPay      int64    `json:"is_pay"`
+		Creator    string   `json:"creator"`
+	}
+
+	AddVerifyResponse {
+		Repetition []string `json:"repetition"`
+	}
+)
+
+//运营微服务
+service apis {
+	@doc(
+		summary: "创建订单"
+	)
+	@handler verify
+	post /api/v1/verify (AddVerifyRequest) returns (AddVerifyResponse)
+}
