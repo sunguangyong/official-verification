@@ -14,8 +14,48 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/v1/verify",
-				Handler: verifyHandler(serverCtx),
+				Path:    "/api/v1/droup/down",
+				Handler: droupdownHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/v1/add/verify",
+				Handler: addverifyHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/v1/list/verify",
+				Handler: listverifyHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/v1/uodate/verify",
+				Handler: updateverifyHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/v1/delete/verify",
+				Handler: deleteverifyHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/v1/list/inform",
+				Handler: listinformHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/v1/export/inform",
+				Handler: exportinformHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/v1/add/inform",
+				Handler: addinformHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/v1/seek/verify",
+				Handler: seekverifyHandler(serverCtx),
 			},
 		},
 	)

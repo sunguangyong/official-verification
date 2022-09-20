@@ -2,13 +2,105 @@
 package types
 
 type AddVerifyRequest struct {
-	VerifyType string   `json:"verify_type"`
-	VerifyInfo []string `json:"verify_info"`
-	JobTiele   string   `json:"job_tiele"`
-	IsPay      int64    `json:"is_pay"`
-	Creator    string   `json:"creator"`
+	VerifyType  string   `json:"verifyType"`  //验证类型
+	SocialName  string   `json:"socialName"`  // social_name
+	VerifyInfos []string `json:"verifyInfos"` //验证内容
+	JobTitle    string   `json:"jobTitle"`    // 职位
+	IsPay       int64    `json:"isPay"`       // 是否接受付费 0 不接受 1 接受
+	Creator     string   `json:"creator"`     // 创建人
 }
 
 type AddVerifyResponse struct {
-	Repetition []string `json:"repetition"`
+	Repetition []string `json:"repetition"` // 重复内容
 }
+
+type ListVerifyRequest struct {
+	VerifyInfo string `json:"verifyInfo"` //验证内容
+	PageIndex  int64  `json:"pageIndex"`  //页码索引
+	PageSize   int64  `json:"pageSize"`   //页码大小
+	VerifyType string `json:"verifyType"` // 验证类型
+	SocialName string `json:"socialName"` // social_name
+}
+
+type ListVerifyResponse struct {
+	List  []ListVerify `json:"list"`  // 数据
+	Count int          `json:"count"` // 总数
+}
+
+type ListVerify struct {
+	Id         int    `json:"id"`         // id
+	VerifyType string `json:"verifyType"` // 验证类型
+	VerifyInfo string `json:"verifyInfo"` // 验证信息
+	SocialName string `json:"socialName"` // 名称
+	IsPay      int64  `json:"isPay"`      // 接受付款
+	JobTiele   string `json:"jobTitle"`   // 职位
+	Creator    string `json:"creator"`    // 创建人
+	CreateTime string `json:"createTime"` // 创建时间
+}
+
+type UpdateVerifyRequest struct {
+	Id         string `json:"id"`
+	VerifyType string `json:"verifyType"` // 验证类型
+	SocialName string `json:"socialName"` // social_name
+	VerifyInfo string `json:"verifyInfo"` // 验证信息
+	JobTitle   string `json:"jobTitle"`   // 职位
+	IsPay      int64  `json:"isPay"`      // 是否接受付费 0 不接受 1 接受
+	Creator    string `json:"creator"`    // 创建人
+}
+
+type UpdateVerifyResponse struct {
+}
+
+type DeleteVerifyRequest struct {
+	Id string `json:"id"` // id
+}
+
+type DeleteVerifyResponse struct {
+}
+
+type ListInformRequest struct {
+	VerifyInfo string `json:"verifyInfo"` //验证内容
+	PageIndex  int64  `json:"pageIndex"`  //页码索引
+	PageSize   int64  `json:"pageSize"`   //页码大小
+	VerifyType string `json:"verifyType"` // 验证类型
+	SocialName string `json:"socialName"` // social_name
+	StartTime  string `json:"startTime"`  // 开始时间
+	EndTime    string `json:"endTime"`    // 结束时间
+}
+
+type ListInformResponse struct {
+	List  []ListInform `json:"list"`
+	Count int          `json:"count"` // 总数
+}
+
+type ListInform struct {
+	VerifyInfo string `json:"verifyInfo"` //举报内容内容
+	VerifyType string `json:"verifyType"` // 验证类型
+	SocialName string `json:"socialName"` // social_name
+	CreateTime string `json:"createTime"` // 创建时间
+}
+
+type ExportInformResponse struct {
+}
+
+type SeekVerifyRequest struct {
+	VerifyInfo string `json:"verifyInfo"` //举报内容内容
+	VerifyType string `json:"verifyType"` // 验证类型
+	SocialName string `json:"socialName"` // social_name
+}
+
+type SeekVerifyResponse struct {
+	IsTure bool `json:"isTure"` // 是否官方 true 是 false 不是
+}
+
+type Dropdown struct {
+	Value string `json:"value"`
+	Label string `json:"label"`
+}
+
+type DropdownResponse struct {
+	VerifyDropdown []Dropdown `json:"verifyDropdown"`
+	SocialDropdown []Dropdown `json:"socialDropdown"`
+}
+
+type DropdownRequest struct{}
