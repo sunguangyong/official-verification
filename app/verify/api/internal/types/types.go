@@ -2,16 +2,20 @@
 package types
 
 type AddVerifyRequest struct {
-	VerifyType  string   `json:"verifyType"`  //验证类型
-	SocialName  string   `json:"socialName"`  // social_name
-	VerifyInfos []string `json:"verifyInfos"` //验证内容
-	JobTitle    string   `json:"jobTitle"`    // 职位
-	IsPay       int64    `json:"isPay"`       // 是否接受付费 0 不接受 1 接受
-	Creator     string   `json:"creator"`     // 创建人
+	VerifyType string       `json:"verifyType"` //验证类型
+	SocialName string       `json:"socialName"` // social_name
+	Data       []VerifyData `json:"data"`       //验证内容
+	Creator    string       `json:"creator"`    // 创建人
+}
+
+type VerifyData struct {
+	VerifyInfo string `json:"verifyInfo"`
+	JobTitle   string `json:"jobTitle"` // 职位
+	IsPay      string `json:"isPay"`    // 是否接受付费 0 不接受 1 接受
 }
 
 type AddVerifyResponse struct {
-	Repetition []string `json:"repetition"` // 重复内容
+	Repetition []VerifyData `json:"repetition"` // 重复内容
 }
 
 type ListVerifyRequest struct {
@@ -32,7 +36,7 @@ type ListVerify struct {
 	VerifyType string `json:"verifyType"` // 验证类型
 	VerifyInfo string `json:"verifyInfo"` // 验证信息
 	SocialName string `json:"socialName"` // 名称
-	IsPay      int64  `json:"isPay"`      // 接受付款
+	IsPay      string `json:"isPay"`      // 接受付款
 	JobTiele   string `json:"jobTitle"`   // 职位
 	Creator    string `json:"creator"`    // 创建人
 	CreateTime string `json:"createTime"` // 创建时间
@@ -44,7 +48,7 @@ type UpdateVerifyRequest struct {
 	SocialName string `json:"socialName"` // social_name
 	VerifyInfo string `json:"verifyInfo"` // 验证信息
 	JobTitle   string `json:"jobTitle"`   // 职位
-	IsPay      int64  `json:"isPay"`      // 是否接受付费 0 不接受 1 接受
+	IsPay      string `json:"isPay"`      // 是否接受付费 0 不接受 1 接受
 	Creator    string `json:"creator"`    // 创建人
 }
 
@@ -103,4 +107,5 @@ type DropdownResponse struct {
 	SocialDropdown []Dropdown `json:"socialDropdown"`
 }
 
-type DropdownRequest struct{}
+type DropdownRequest struct {
+}

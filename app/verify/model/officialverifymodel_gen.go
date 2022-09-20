@@ -35,18 +35,18 @@ type (
 	}
 
 	OfficialVerify struct {
-		Id         int64     `db:"id"`
-		VerifyInfo string    `db:"verify_info"` // 验证信息
-		VerifyType string    `db:"verify_type"` // 验证类型
-		Name       string    `db:"name"`        // 名称
-		JobTiele   string    `db:"job_tiele"`   // 职位
-		Creator    string    `db:"creator"`     // 职位
-		IsPay      int64     `db:"is_pay"`      // 0 不接受付款 1 接受付款
-		CreateTime time.Time `db:"create_time"` // 创建时间
-		UpdateTime time.Time `db:"update_time"` // 修改时间
-		IsDelete   int64     `db:"is_delete"`   // 删除标识 0 未删除 1 已删除
-		Ctime      time.Time `db:"ctime"`       // 创建时间
-		Mtime      time.Time `db:"mtime"`       // 修改时间
+		Id         int64          `db:"id"`
+		VerifyInfo string         `db:"verify_info"` // 验证信息
+		VerifyType string         `db:"verify_type"` // 验证类型
+		SocialName sql.NullString `db:"social_name"` // 名称
+		JobTiele   sql.NullString `db:"job_tiele"`   // 职位
+		Creator    sql.NullString `db:"creator"`     // 创建人
+		IsPay      sql.NullString `db:"is_pay"`      // 是否接受付款
+		CreateTime time.Time      `db:"create_time"` // 创建时间
+		UpdateTime time.Time      `db:"update_time"` // 修改时间
+		IsDelete   int64          `db:"is_delete"`   // 删除标识 0 未删除 1 已删除
+		Ctime      time.Time      `db:"ctime"`       // 创建时间
+		Mtime      time.Time      `db:"mtime"`       // 修改时间
 	}
 )
 
@@ -59,7 +59,7 @@ func newOfficialVerifyModel(conn sqlx.SqlConn) *defaultOfficialVerifyModel {
 
 func (m *defaultOfficialVerifyModel) Insert(ctx context.Context, data *OfficialVerify) (sql.Result, error) {
 	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, officialVerifyRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.VerifyInfo, data.VerifyType, data.Name, data.JobTiele, data.Creator, data.IsPay, data.IsDelete, data.Ctime, data.Mtime)
+	ret, err := m.conn.ExecCtx(ctx, query, data.VerifyInfo, data.VerifyType, data.SocialName, data.JobTiele, data.Creator, data.IsPay, data.IsDelete, data.Ctime, data.Mtime)
 	return ret, err
 }
 
@@ -79,7 +79,7 @@ func (m *defaultOfficialVerifyModel) FindOne(ctx context.Context, id int64) (*Of
 
 func (m *defaultOfficialVerifyModel) Update(ctx context.Context, data *OfficialVerify) error {
 	query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, officialVerifyRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, data.VerifyInfo, data.VerifyType, data.Name, data.JobTiele, data.Creator, data.IsPay, data.IsDelete, data.Ctime, data.Mtime, data.Id)
+	_, err := m.conn.ExecCtx(ctx, query, data.VerifyInfo, data.VerifyType, data.SocialName, data.JobTiele, data.Creator, data.IsPay, data.IsDelete, data.Ctime, data.Mtime, data.Id)
 	return err
 }
 

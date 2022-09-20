@@ -14,47 +14,47 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/v1/droup/down",
-				Handler: droupdownHandler(serverCtx),
+				Path:    "/api/offical/verify/dropdown",
+				Handler: drupdownHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/v1/add/verify",
+				Path:    "/api/offical/verify/add",
 				Handler: addverifyHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/v1/list/verify",
+				Path:    "/api/offical/verify/listverify",
 				Handler: listverifyHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/v1/uodate/verify",
+				Path:    "/api/offical/verify/update",
 				Handler: updateverifyHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/v1/delete/verify",
+				Path:    "/api/offical/verify/delete",
 				Handler: deleteverifyHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/v1/list/inform",
+				Path:    "/api/offical/verify/listinform",
 				Handler: listinformHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/v1/export/inform",
+				Path:    "/api/offical/verify/exportinform",
 				Handler: exportinformHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/v1/add/inform",
+				Path:    "/api/offical/verify/informadd",
 				Handler: addinformHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/v1/seek/verify",
+				Path:    "/api/offical/verify/seekverify",
 				Handler: seekverifyHandler(serverCtx),
 			},
 		},

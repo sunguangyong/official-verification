@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"cointiger.com/verification/common/result"
 	"net/http"
 
 	"cointiger.com/verification/app/verify/api/internal/logic"
@@ -9,7 +10,7 @@ import (
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func droupdownHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func drupdownHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.DropdownRequest
 		if err := httpx.Parse(r, &req); err != nil {
@@ -17,12 +18,8 @@ func droupdownHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := logic.NewDroupdownLogic(r.Context(), svcCtx)
-		resp, err := l.Droupdown(&req)
-		if err != nil {
-			httpx.Error(w, err)
-		} else {
-			httpx.OkJson(w, resp)
-		}
+		l := logic.NewDrupdownLogic(r.Context(), svcCtx)
+		resp, err := l.Drupdown(&req)
+		result.HttpResult(r, w, resp, err)
 	}
 }
