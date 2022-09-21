@@ -85,6 +85,7 @@ type ListInform struct {
 }
 
 type ExportInformResponse struct {
+	List []ListInform `json:"list"`
 }
 
 type SeekVerifyRequest struct {

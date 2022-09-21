@@ -88,7 +88,9 @@ type (
 		CreateTime string `json:"createTime"` // 创建时间
 	}
 
-	ExportInformResponse struct{}
+	ExportInformResponse {
+		List []ListInform `json:"list"`
+	}
 
 	SeekVerifyRequest {
 		VerifyInfo string `json:"verifyInfo"` //举报内容内容
