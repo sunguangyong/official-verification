@@ -31,7 +31,6 @@ func NewReportRecordModel(conn sqlx.SqlConn) ReportRecordModel {
 	}
 }
 
-
 func (m *defaultReportRecordModel) CommonFind(ctx context.Context, querySql, orderSql, limitSql string) ([]*OfficialVerify, error) {
 	query := fmt.Sprintf("select %s from %s %s %s %s", reportRecordRows, m.table, querySql, orderSql, limitSql)
 	var resp []*OfficialVerify
@@ -45,7 +44,6 @@ func (m *defaultReportRecordModel) CommonFind(ctx context.Context, querySql, ord
 		return nil, err
 	}
 }
-
 
 func (m *defaultReportRecordModel) FindNewsCount(ctx context.Context, paramSql string) (count int64, err error) {
 	query := fmt.Sprintf(`select count(1) from %s %s`, m.table, paramSql)

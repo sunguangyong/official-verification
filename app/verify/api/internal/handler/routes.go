@@ -29,6 +29,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
+				Path:    "/api/offical/verify/detail",
+				Handler: detailverifyHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/api/offical/verify/update",
 				Handler: updateverifyHandler(serverCtx),
 			},

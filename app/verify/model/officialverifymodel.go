@@ -45,7 +45,6 @@ func (m *defaultOfficialVerifyModel) CommonFind(ctx context.Context, querySql, o
 	}
 }
 
-
 func (m *defaultOfficialVerifyModel) FindNewsCount(ctx context.Context, paramSql string) (count int64, err error) {
 	query := fmt.Sprintf(`select count(1) from %s %s`, m.table, paramSql)
 	err = m.conn.QueryRowCtx(ctx, &count, query)

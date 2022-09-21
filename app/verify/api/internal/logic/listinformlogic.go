@@ -34,32 +34,37 @@ func (l *ListinformLogic) Listinform(req *types.ListInformRequest) (resp *types.
 	createTime := req.StartTime
 	endTime := req.EndTime
 
+	resp = &types.ListInformResponse{
+		List:  make([]types.ListInform, 0),
+		Count: 0,
+	}
+
 	resp.List = make([]types.ListInform, 0)
 
 	if verifyInfo != "" {
-		queryList = append(queryList,fmt.Sprintf("verify_info like '%%%s%%'", verifyInfo))
+		queryList = append(queryList, fmt.Sprintf("verify_info like '%%%s%%'", verifyInfo))
 	}
 
 	if verifyType != "" {
-		queryList = append(queryList,fmt.Sprintf("verify_type = '%s'", verifyType))
+		queryList = append(queryList, fmt.Sprintf("verify_type = '%s'", verifyType))
 	}
 
 	if socialName != "" {
-		queryList = append(queryList,fmt.Sprintf("social_name = '%s'", socialName))
+		queryList = append(queryList, fmt.Sprintf("social_name = '%s'", socialName))
 	}
 
 	if createTime != "" && endTime != "" {
-		queryList = append(queryList,fmt.Sprintf("create_time between '%s' and '%s' and ", createTime, endTime))
+		queryList = append(queryList, fmt.Sprintf("create_time between '%s' and '%s'", createTime, endTime))
 	}
 
 	if len(queryList) > 0 {
-		querySql = "where " + strings.Join(queryList," and ")
+		querySql = "where " + strings.Join(queryList, " and ")
 	}
 
 	limitSql := fmt.Sprintf("limit %d, %d", (req.PageIndex-1)*req.PageSize, req.PageSize)
 	orderSql := "order by id"
 
-	count , err := l.svcCtx.ReportRecord.FindNewsCount(l.ctx,querySql)
+	count, err := l.svcCtx.ReportRecord.FindNewsCount(l.ctx, querySql)
 
 	if err != nil {
 		l.Logger.Error(err)
@@ -70,17 +75,17 @@ func (l *ListinformLogic) Listinform(req *types.ListInformRequest) (resp *types.
 		return
 	}
 
-    resp.Count = int(count)
-	dataList, err := l.svcCtx.ReportRecord.CommonFind(l.ctx,querySql,limitSql,orderSql)
+	resp.Count = int(count)
+	dataList, err := l.svcCtx.ReportRecord.CommonFind(l.ctx, querySql, orderSql, limitSql)
 
 	if err != nil {
 		l.Logger.Error(err)
 		return
 	}
 
-    for _, data := range dataList {
-        resp.List = append(resp.List,types.ListInform{
-			VerifyInfo:data.VerifyInfo,
+	for _, data := range dataList {
+		resp.List = append(resp.List, types.ListInform{
+			VerifyInfo: data.VerifyInfo,
 			VerifyType: data.VerifyType,
 			SocialName: data.SocialName.String,
 			CreateTime: data.CreateTime.Format("2006-01-02 15:04:05"),

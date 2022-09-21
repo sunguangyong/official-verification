@@ -10,16 +10,16 @@ import (
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func listinformHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func detailverifyHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.ListInformRequest
+		var req types.DetailVerifyRequest
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.Error(w, err)
 			return
 		}
 
-		l := logic.NewListinformLogic(r.Context(), svcCtx)
-		resp, err := l.Listinform(&req)
+		l := logic.NewDetailverifyLogic(r.Context(), svcCtx)
+		resp, err := l.Detailverify(&req)
 		result.HttpResult(r, w, resp, err)
 	}
 }

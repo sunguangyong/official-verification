@@ -26,6 +26,14 @@ type ListVerifyRequest struct {
 	SocialName string `json:"socialName"` // social_name
 }
 
+type DetailVerifyRequest struct {
+	Id int64 `json:"id"`
+}
+
+type DetailVerifyResponse struct {
+	Verify ListVerify `json:"list"` // 数据
+}
+
 type ListVerifyResponse struct {
 	List  []ListVerify `json:"list"`  // 数据
 	Count int          `json:"count"` // 总数
@@ -91,11 +99,10 @@ type ExportInformResponse struct {
 type SeekVerifyRequest struct {
 	VerifyInfo string `json:"verifyInfo"` //举报内容内容
 	VerifyType string `json:"verifyType"` // 验证类型
-	SocialName string `json:"socialName"` // social_name
 }
 
 type SeekVerifyResponse struct {
-	IsTure bool `json:"isTure"` // 是否官方 true 是 false 不是
+	VerifyList []ListVerify `json:"list"` // 数据
 }
 
 type Dropdown struct {

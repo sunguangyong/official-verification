@@ -32,28 +32,31 @@ func (l *ListverifyLogic) Listverify(req *types.ListVerifyRequest) (resp *types.
 	verifyType := req.VerifyType
 	socialName := req.SocialName
 
-	resp.List = make([]types.ListVerify, 0)
+	resp = &types.ListVerifyResponse{
+		List:  make([]types.ListVerify, 0),
+		Count: 0,
+	}
 
 	if verifyInfo != "" {
-		queryList = append(queryList,fmt.Sprintf("verify_info like '%%%s%%'", verifyInfo))
+		queryList = append(queryList, fmt.Sprintf("verify_info like '%%%s%%'", verifyInfo))
 	}
 
 	if verifyType != "" {
-		queryList = append(queryList,fmt.Sprintf("verify_type = '%s'", verifyType))
+		queryList = append(queryList, fmt.Sprintf("verify_type = '%s'", verifyType))
 	}
 
 	if socialName != "" {
-		queryList = append(queryList,fmt.Sprintf("social_name = '%s'", socialName))
+		queryList = append(queryList, fmt.Sprintf("social_name = '%s'", socialName))
 	}
 
 	if len(queryList) > 0 {
-		querySql = "where " + strings.Join(queryList," and ")
+		querySql = "where " + strings.Join(queryList, " and ")
 	}
 
 	limitSql := fmt.Sprintf("limit %d, %d", (req.PageIndex-1)*req.PageSize, req.PageSize)
 	orderSql := "order by id"
 
-	count , err := l.svcCtx.OfficialVerify.FindNewsCount(l.ctx,querySql)
+	count, err := l.svcCtx.OfficialVerify.FindNewsCount(l.ctx, querySql)
 
 	if err != nil {
 		l.Logger.Error(err)
@@ -65,7 +68,7 @@ func (l *ListverifyLogic) Listverify(req *types.ListVerifyRequest) (resp *types.
 	}
 
 	resp.Count = int(count)
-	dataList, err := l.svcCtx.OfficialVerify.CommonFind(l.ctx,querySql,limitSql,orderSql)
+	dataList, err := l.svcCtx.OfficialVerify.CommonFind(l.ctx, querySql, orderSql, limitSql)
 
 	if err != nil {
 		l.Logger.Error(err)
@@ -73,12 +76,12 @@ func (l *ListverifyLogic) Listverify(req *types.ListVerifyRequest) (resp *types.
 	}
 
 	for _, data := range dataList {
-		resp.List = append(resp.List,types.ListVerify{
-			Id : int(data.Id),
-			IsPay: data.IsPay.String,
-			JobTiele: data.JobTiele.String,
-			Creator: data.Creator.String,
-			VerifyInfo:data.VerifyInfo,
+		resp.List = append(resp.List, types.ListVerify{
+			Id:         int(data.Id),
+			IsPay:      data.IsPay.String,
+			JobTiele:   data.JobTiele.String,
+			Creator:    data.Creator.String,
+			VerifyInfo: data.VerifyInfo,
 			VerifyType: data.VerifyType,
 			SocialName: data.SocialName.String,
 			CreateTime: data.CreateTime.Format("2006-01-02 15:04:05"),

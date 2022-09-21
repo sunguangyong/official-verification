@@ -3,11 +3,11 @@ package logic
 import (
 	"cointiger.com/verification/app/verify/model"
 	"context"
-	"database/sql"
 	"fmt"
 
 	"cointiger.com/verification/app/verify/api/internal/svc"
 	"cointiger.com/verification/app/verify/api/internal/types"
+	"cointiger.com/verification/common/convert"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -47,34 +47,15 @@ func (l *AddverifyLogic) Addverify(req *types.AddVerifyRequest) (resp *types.Add
 	}
 
 	for _, info := range dataList {
-		var jobTitle sql.NullString
-		var isPay sql.NullString
-		var creator sql.NullString
-
-		if info.IsPay != "" {
-			isPay.Valid = true
-			isPay.String = info.IsPay
-		}
-
-		if info.JobTitle != "" {
-			jobTitle.Valid = true
-			jobTitle.String = info.IsPay
-		}
-
-		if req.Creator != "" {
-			creator.Valid = true
-			creator.String = req.Creator
-		}
-
 		officialVerify := &model.OfficialVerify{
 			VerifyType: verifyType,
 			VerifyInfo: info.VerifyInfo,
-			JobTiele:   jobTitle,
-			IsPay:      isPay,
-			Creator:    creator,
+			JobTiele:   convert.StrToNullString(info.JobTitle),
+			IsPay:      convert.StrToNullString(info.IsPay),
+			Creator:    convert.StrToNullString(req.Creator),
+			SocialName: convert.StrToNullString(req.SocialName),
 		}
 		l.svcCtx.OfficialVerify.Insert(l.ctx, officialVerify)
 	}
-	return
 	return
 }

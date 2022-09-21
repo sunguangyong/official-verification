@@ -32,6 +32,14 @@ type (
 		SocialName string `json:"socialName"` // social_name
 	}
 
+	DetailVerifyRequest {
+		Id int64 `json:"id"`
+	}
+
+	DetailVerifyResponse {
+		Verify ListVerify `json:"list"` // 数据
+	}
+
 	ListVerifyResponse {
 		List  []ListVerify `json:"list"`  // 数据
 		Count int          `json:"count"` // 总数
@@ -95,11 +103,10 @@ type (
 	SeekVerifyRequest {
 		VerifyInfo string `json:"verifyInfo"` //举报内容内容
 		VerifyType string `json:"verifyType"` // 验证类型
-		SocialName string `json:"socialName"` // social_name
 	}
 
 	SeekVerifyResponse {
-		IsTure bool `json:"isTure"` // 是否官方 true 是 false 不是
+		VerifyList []ListVerify `json:"list"` // 数据
 	}
 
 	Dropdown {
@@ -137,6 +144,12 @@ service apis {
 	post /api/offical/verify/listverify (ListVerifyRequest) returns (ListVerifyResponse)
 	
 	@doc(
+		summary: "验证详情页"
+	)
+	@handler detailverify
+	post /api/offical/verify/detail (DetailVerifyRequest) returns (DetailVerifyResponse)
+	
+	@doc(
 		summary: "修改验证信息"
 	)
 	@handler updateverify
@@ -155,7 +168,7 @@ service apis {
 	post /api/offical/verify/listinform (ListInformRequest) returns (ListInformResponse)
 	
 	@doc(
-		summary: "举报列表"
+		summary: "导出举报列表"
 	)
 	@handler exportinform
 	post /api/offical/verify/exportinform (ListInformRequest) returns (ExportInformResponse)

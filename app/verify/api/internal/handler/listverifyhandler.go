@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"cointiger.com/verification/common/result"
 	"net/http"
 
 	"cointiger.com/verification/app/verify/api/internal/logic"
@@ -19,10 +20,6 @@ func listverifyHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := logic.NewListverifyLogic(r.Context(), svcCtx)
 		resp, err := l.Listverify(&req)
-		if err != nil {
-			httpx.Error(w, err)
-		} else {
-			httpx.OkJson(w, resp)
-		}
+		result.HttpResult(r, w, resp, err)
 	}
 }

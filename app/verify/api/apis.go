@@ -27,7 +27,7 @@ func main() {
 	ctx := svc.NewServiceContext(c)
 	server := rest.MustNewServer(c.RestConf)
 	defer server.Stop()
-	logx.SetLevel(logx.ErrorLevel)
+	logx.SetLevel(logx.InfoLevel)
 	handler.RegisterHandlers(server, ctx)
 	instance.NewRedis(c.VerifyRdb.Addr, c.VerifyRdb.Passwd)
 	server.Use(middleware.RateLimit)
