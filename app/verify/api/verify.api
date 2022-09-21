@@ -49,7 +49,7 @@ type (
 	}
 
 	UpdateVerifyRequest {
-		Id         string `json:"id"`
+		Id         int64  `json:"id"`
 		VerifyType string `json:"verifyType"` // 验证类型
 		SocialName string `json:"socialName"` // social_name
 		VerifyInfo string `json:"verifyInfo"` // 验证信息
@@ -61,7 +61,7 @@ type (
 	UpdateVerifyResponse struct{}
 
 	DeleteVerifyRequest {
-		Id string `json:"id"` // id
+		Id int64 `json:"id"` // id
 	}
 
 	DeleteVerifyResponse struct{}
@@ -138,7 +138,7 @@ service apis {
 		summary: "修改验证信息"
 	)
 	@handler updateverify
-	post /api/offical/verify/update (UpdateVerifyRequest) returns (AddVerifyResponse)
+	post /api/offical/verify/update (UpdateVerifyRequest) returns (UpdateVerifyResponse)
 	
 	@doc(
 		summary: "删除验证信息"

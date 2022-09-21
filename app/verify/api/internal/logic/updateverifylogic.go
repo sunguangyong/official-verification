@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"cointiger.com/verification/common/convert"
 	"context"
 
 	"cointiger.com/verification/app/verify/api/internal/svc"
@@ -23,8 +24,22 @@ func NewUpdateverifyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Upda
 	}
 }
 
-func (l *UpdateverifyLogic) Updateverify(req *types.UpdateVerifyRequest) (resp *types.AddVerifyResponse, err error) {
-	// todo: add your logic here and delete this line
-
+func (l *UpdateverifyLogic) Updateverify(req *types.UpdateVerifyRequest) (resp *types.UpdateVerifyResponse, err error) {
+	id := req.Id
+	data, err := l.svcCtx.OfficialVerify.FindOne(l.ctx,id)
+	if data == nil || err != nil {
+		l.Logger.Error(err)
+		return
+	}
+	data.VerifyInfo = req.VerifyInfo
+	data.VerifyType = req.VerifyType
+	data.SocialName = convert.StrToNullString(req.SocialName)
+	data.JobTiele = convert.StrToNullString(req.JobTitle)
+	data.Creator = convert.StrToNullString(req.Creator)
+	data.IsPay = convert.StrToNullString(req.IsPay)
+	err = l.svcCtx.OfficialVerify.Update(l.ctx,data)
+	if err != nil {
+		l.Logger.Error(err)
+	}
 	return
 }

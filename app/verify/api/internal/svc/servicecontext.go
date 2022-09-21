@@ -11,6 +11,7 @@ type ServiceContext struct {
 	OfficialVerify model.OfficialVerifyModel
 	VerifyEnum     model.VerifyEnumModel
 	SocialEnum     model.SocialEnumModel
+	ReportRecord     model.ReportRecordModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -19,5 +20,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		OfficialVerify: model.NewOfficialVerifyModel(sqlx.NewMysql(c.VerifyMysql.DataSource)),
 		VerifyEnum:     model.NewVerifyEnumModel(sqlx.NewMysql(c.VerifyMysql.DataSource)),
 		SocialEnum:     model.NewSocialEnumModel(sqlx.NewMysql(c.VerifyMysql.DataSource)),
+		ReportRecord:     model.NewReportRecordModel(sqlx.NewMysql(c.VerifyMysql.DataSource)),
 	}
 }

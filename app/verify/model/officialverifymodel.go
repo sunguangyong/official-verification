@@ -2,6 +2,7 @@ package model
 
 import (
 	"fmt"
+	"github.com/zeromicro/go-zero/core/stores/sqlc"
 
 	"context"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
@@ -15,6 +16,7 @@ type (
 	OfficialVerifyModel interface {
 		officialVerifyModel
 		CommonFind(ctx context.Context, querySql, orderSql, limitSql string) ([]*OfficialVerify, error)
+		FindNewsCount(ctx context.Context, paramSql string) (count int64, err error)
 	}
 
 	customOfficialVerifyModel struct {
@@ -40,5 +42,20 @@ func (m *defaultOfficialVerifyModel) CommonFind(ctx context.Context, querySql, o
 		return nil, ErrNotFound
 	default:
 		return nil, err
+	}
+}
+
+
+func (m *defaultOfficialVerifyModel) FindNewsCount(ctx context.Context, paramSql string) (count int64, err error) {
+	query := fmt.Sprintf(`select count(1) from %s %s`, m.table, paramSql)
+	err = m.conn.QueryRowCtx(ctx, &count, query)
+
+	switch err {
+	case nil:
+		return count, nil
+	case sqlc.ErrNotFound:
+		return 0, ErrNotFound
+	default:
+		return 0, err
 	}
 }

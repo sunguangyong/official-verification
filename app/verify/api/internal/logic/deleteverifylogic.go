@@ -24,7 +24,10 @@ func NewDeleteverifyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Dele
 }
 
 func (l *DeleteverifyLogic) Deleteverify(req *types.DeleteVerifyRequest) (resp *types.DeleteVerifyResponse, err error) {
-	// todo: add your logic here and delete this line
-
+	id := req.Id
+	err = l.svcCtx.OfficialVerify.Delete(l.ctx,id)
+	if err != nil {
+		l.Logger.Error(err)
+	}
 	return
 }

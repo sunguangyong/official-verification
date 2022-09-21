@@ -53,6 +53,7 @@ goctl api go -api ./api/*.api -dir ./api
 goctl model mysql ddl -src ./model/official_verify.sql -dir ./model
 goctl model mysql ddl -src ./model/verify_enum.sql -dir ./model
 goctl model mysql ddl -src ./model/social_enum.sql -dir ./model
+goctl model mysql ddl -src ./model/report_record.sql -dir ./model
 ```
 
 ### 文档生成

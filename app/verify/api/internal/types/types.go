@@ -43,7 +43,7 @@ type ListVerify struct {
 }
 
 type UpdateVerifyRequest struct {
-	Id         string `json:"id"`
+	Id         int64  `json:"id"`
 	VerifyType string `json:"verifyType"` // 验证类型
 	SocialName string `json:"socialName"` // social_name
 	VerifyInfo string `json:"verifyInfo"` // 验证信息
@@ -56,7 +56,7 @@ type UpdateVerifyResponse struct {
 }
 
 type DeleteVerifyRequest struct {
-	Id string `json:"id"` // id
+	Id int64 `json:"id"` // id
 }
 
 type DeleteVerifyResponse struct {
