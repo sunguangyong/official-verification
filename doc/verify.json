@@ -233,6 +233,23 @@
         ]
       }
     },
+    "/api/offical/verify/monitor": {
+      "get": {
+        "summary": "监控",
+        "operationId": "monitor",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/MonitorResponse"
+            }
+          }
+        },
+        "tags": [
+          "apis"
+        ]
+      }
+    },
     "/api/offical/verify/seekverify": {
       "post": {
         "summary": "查询",
@@ -636,6 +653,14 @@
         "list",
         "count"
       ]
+    },
+    "MonitorRequest": {
+      "type": "object",
+      "title": "MonitorRequest"
+    },
+    "MonitorResponse": {
+      "type": "object",
+      "title": "MonitorResponse"
     },
     "SeekVerifyRequest": {
       "type": "object",
