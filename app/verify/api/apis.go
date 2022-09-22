@@ -25,13 +25,16 @@ func main() {
 
 	c.RestConf.Timeout = 600 * 1000
 	ctx := svc.NewServiceContext(c)
-	server := rest.MustNewServer(c.RestConf)
+	//server := rest.MustNewServer(c.RestConf)
+	server := rest.MustNewServer(c.RestConf, rest.WithCors())
+
+
 	defer server.Stop()
 	logx.SetLevel(logx.InfoLevel)
 	handler.RegisterHandlers(server, ctx)
 	instance.NewRedis(c.VerifyRdb.Addr, c.VerifyRdb.Passwd)
 	server.Use(middleware.RateLimit)
-	server.Use(middleware.Cors)
+	//server.Use(middleware.Cors)
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()
 }
