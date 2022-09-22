@@ -26,7 +26,7 @@ func main() {
 	c.RestConf.Timeout = 600 * 1000
 	ctx := svc.NewServiceContext(c)
 	//server := rest.MustNewServer(c.RestConf)
-	server := rest.MustNewServer(c.RestConf, rest.WithCors())
+	server := rest.MustNewServer(c.RestConf, rest.WithCors("*"))
 
 
 	defer server.Stop()
