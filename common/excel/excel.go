@@ -9,7 +9,7 @@ import (
 )
 
 // ExportExcelByStruct excel导出(数据源为Struct)
-func ExportByStruct(c io.Writer, titleList []string, data []interface{},  sheetName string) error {
+func ExportByStruct(c io.Writer, titleList []string, data []interface{}, sheetName string) error {
 	f := excelize.NewFile()
 	f.SetSheetName("Sheet1", sheetName)
 	header := make([]string, 0)

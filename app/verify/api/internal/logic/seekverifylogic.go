@@ -35,10 +35,13 @@ func (l *SeekverifyLogic) Seekverify(req *types.SeekVerifyRequest) (resp *types.
 	switch req.VerifyType {
 	case "Website":
 		listVerify, err = l.website(req)
+
+	case "Telegram Username":
+		listVerify, err = l.telegramUsername(req)
+
 	case "Social media":
 		listVerify, err = l.common(req)
-	case "Telegram Username":
-		listVerify, err = l.common(req)
+
 	case "Discord ID":
 		listVerify, err = l.common(req)
 	}
@@ -107,7 +110,7 @@ func (l *SeekverifyLogic) telegramUsername(req *types.SeekVerifyRequest) (listVe
 
 	ok := strings.HasPrefix(req.VerifyInfo, "@")
 	if ok {
-		verifyInfo = req.VerifyType[1:]
+		verifyInfo = req.VerifyInfo[1:]
 	} else {
 		verifyInfo = req.VerifyInfo
 	}

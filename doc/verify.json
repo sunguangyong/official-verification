@@ -71,6 +71,33 @@
         ]
       }
     },
+    "/api/offical/verify/detail": {
+      "post": {
+        "summary": "验证详情页",
+        "operationId": "detailverify",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DetailVerifyResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DetailVerifyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "apis"
+        ]
+      }
+    },
     "/api/offical/verify/dropdown": {
       "post": {
         "summary": "下拉框",
@@ -100,7 +127,7 @@
     },
     "/api/offical/verify/exportinform": {
       "post": {
-        "summary": "举报列表",
+        "summary": "导出举报列表",
         "operationId": "exportinform",
         "responses": {
           "200": {
@@ -241,7 +268,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/AddVerifyResponse"
+              "$ref": "#/definitions/UpdateVerifyResponse"
             }
           }
         },
@@ -327,6 +354,32 @@
       "type": "object",
       "title": "DeleteVerifyResponse"
     },
+    "DetailVerifyRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "DetailVerifyRequest",
+      "required": [
+        "id"
+      ]
+    },
+    "DetailVerifyResponse": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "$ref": "#/definitions/ListVerify",
+          "description": " 数据"
+        }
+      },
+      "title": "DetailVerifyResponse",
+      "required": [
+        "list"
+      ]
+    },
     "Dropdown": {
       "type": "object",
       "properties": {
@@ -371,7 +424,18 @@
     },
     "ExportInformResponse": {
       "type": "object",
-      "title": "ExportInformResponse"
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ListInform"
+          }
+        }
+      },
+      "title": "ExportInformResponse",
+      "required": [
+        "list"
+      ]
     },
     "ListInform": {
       "type": "object",
@@ -583,31 +647,28 @@
         "verifyType": {
           "type": "string",
           "description": " 验证类型"
-        },
-        "socialName": {
-          "type": "string",
-          "description": " social_name"
         }
       },
       "title": "SeekVerifyRequest",
       "required": [
         "verifyInfo",
-        "verifyType",
-        "socialName"
+        "verifyType"
       ]
     },
     "SeekVerifyResponse": {
       "type": "object",
       "properties": {
-        "isTure": {
-          "type": "boolean",
-          "format": "boolean",
-          "description": " 是否官方 true 是 false 不是"
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ListVerify"
+          },
+          "description": " 数据"
         }
       },
       "title": "SeekVerifyResponse",
       "required": [
-        "isTure"
+        "list"
       ]
     },
     "UpdateVerifyRequest": {

@@ -4,8 +4,7 @@ import (
 	"database/sql"
 )
 
-
-func StrToNullString(str string) (data sql.NullString){
+func StrToNullString(str string) (data sql.NullString) {
 	if str == "" {
 		data.Valid = false
 	} else {

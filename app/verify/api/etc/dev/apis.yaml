@@ -3,4 +3,8 @@ Host: 0.0.0.0
 Port: 8888
 
 TelegramBotMysql:
-  DataSource: root:qIlRn)muX83d@tcp(82.156.56.237:3306)/telegram_bot?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+  DataSource: dev_ct_biz57:xixAeXNoMXGdyyhfdwU8@tcp(172.16.10.4:3306)/dev_exchange_bom?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+VerifyRdb:
+  Addr: 172.16.10.30
+  Passwd: Taione999

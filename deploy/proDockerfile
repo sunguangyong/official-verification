@@ -1,0 +1,19 @@
+FROM harbor.xumi.info/devops/golang:1.17.10 AS builder
+LABEL stage=gobuilder
+ENV CGO_ENABLED 0
+ENV GO111MODULE on
+WORKDIR /build
+ADD go.mod .
+ADD go.sum .
+RUN go mod download
+COPY . .
+COPY app/verify/api/etc /cmd/etc
+RUN  go build -ldflags="-s -w" -o /cmd/verification app/verify/api/apis.go
+FROM harbor.xumi.info/devops/alpine:v1
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --from=builder /usr/share/zoneinfo/Asia/Shanghai /usr/share/zoneinfo/Asia/Shanghai
+ENV TZ Asia/Shanghai
+WORKDIR /cmd
+COPY --from=builder /cmd/verification /cmd/verification
+COPY --from=builder /cmd/etc /cmd/etc
+CMD ["./verification", "-f", "etc/pro/apis.yaml"]
