@@ -62,6 +62,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/api/offical/verify/seekverify",
 				Handler: seekverifyHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/api/offical/verify/monitor",
+				Handler: monitorHandler(serverCtx),
+			},
 		},
 	)
 }

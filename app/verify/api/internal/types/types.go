@@ -117,3 +117,9 @@ type DropdownResponse struct {
 
 type DropdownRequest struct {
 }
+
+type MonitorRequest struct {
+}
+
+type MonitorResponse struct {
+}

@@ -120,6 +120,10 @@ type (
 	}
 
 	DropdownRequest struct{}
+
+	MonitorRequest struct{}
+
+	MonitorResponse struct{}
 )
 
 // 官方认证
@@ -184,5 +188,11 @@ service apis {
 	)
 	@handler seekverify
 	post /api/offical/verify/seekverify (SeekVerifyRequest) returns (SeekVerifyResponse)
+	
+	@doc(
+		summary: "监控"
+	)
+	@handler monitor
+	get /api/offical/verify/monitor (MonitorRequest) returns (MonitorResponse)
 	
 }
