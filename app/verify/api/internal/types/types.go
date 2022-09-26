@@ -5,7 +5,6 @@ type AddVerifyRequest struct {
 	VerifyType string       `json:"verifyType"` //验证类型
 	SocialName string       `json:"socialName"` // social_name
 	Data       []VerifyData `json:"data"`       //验证内容
-	Creator    string       `json:"creator"`    // 创建人
 }
 
 type VerifyData struct {
@@ -15,7 +14,14 @@ type VerifyData struct {
 }
 
 type AddVerifyResponse struct {
-	Repetition []VerifyData `json:"repetition"` // 重复内容
+	Repetition []RepetitionVerifyData `json:"repetition"` // 重复内容
+}
+
+type RepetitionVerifyData struct {
+	Index      int64  `json:"index"`
+	VerifyInfo string `json:"verifyInfo"`
+	JobTitle   string `json:"jobTitle"` // 职位
+	IsPay      string `json:"isPay"`    // 是否接受付费 0 不接受 1 接受
 }
 
 type ListVerifyRequest struct {
@@ -44,9 +50,9 @@ type ListVerify struct {
 	VerifyType string `json:"verifyType"` // 验证类型
 	VerifyInfo string `json:"verifyInfo"` // 验证信息
 	SocialName string `json:"socialName"` // 名称
+	Creator    string `json:"creator"`    // 名称
 	IsPay      string `json:"isPay"`      // 接受付款
 	JobTiele   string `json:"jobTitle"`   // 职位
-	Creator    string `json:"creator"`    // 创建人
 	CreateTime string `json:"createTime"` // 创建时间
 }
 
@@ -57,10 +63,10 @@ type UpdateVerifyRequest struct {
 	VerifyInfo string `json:"verifyInfo"` // 验证信息
 	JobTitle   string `json:"jobTitle"`   // 职位
 	IsPay      string `json:"isPay"`      // 是否接受付费 0 不接受 1 接受
-	Creator    string `json:"creator"`    // 创建人
 }
 
 type UpdateVerifyResponse struct {
+	IsExist bool `json:"isexist"` // true 已存在 false 不存在
 }
 
 type DeleteVerifyRequest struct {

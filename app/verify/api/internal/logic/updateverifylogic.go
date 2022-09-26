@@ -4,16 +4,11 @@ import (
 	"fmt"
 	"strconv"
 
-	"errors"
-
 	"context"
-
-	"cointiger.com/verification/common/constant"
-	"cointiger.com/verification/common/convert"
-	"cointiger.com/verification/common/xerr"
 
 	"cointiger.com/verification/app/verify/api/internal/svc"
 	"cointiger.com/verification/app/verify/api/internal/types"
+	"cointiger.com/verification/common/convert"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -33,6 +28,9 @@ func NewUpdateverifyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Upda
 
 func (l *UpdateverifyLogic) Updateverify(req *types.UpdateVerifyRequest, token string) (resp *types.UpdateVerifyResponse,
 	err error) {
+	resp = &types.UpdateVerifyResponse{
+		IsExist: false,
+	}
 	id := req.Id
 	data, err := l.svcCtx.OfficialVerify.FindOne(l.ctx, id)
 	if data == nil || err != nil {
@@ -48,7 +46,8 @@ func (l *UpdateverifyLogic) Updateverify(req *types.UpdateVerifyRequest, token s
 	}
 
 	if len(verifyList) > 0 {
-		err = xerr.NewErr(constant.REPEATVERIFY, errors.New("已有此验证内容，不可添加"))
+		//err = xerr.NewErr(constant.REPEATVERIFY, errors.New("已有此验证内容，不可添加"))
+		resp.IsExist = true
 		return
 	}
 

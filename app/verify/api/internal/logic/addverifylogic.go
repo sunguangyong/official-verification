@@ -33,7 +33,7 @@ func NewAddverifyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Addveri
 func (l *AddverifyLogic) Addverify(req *types.AddVerifyRequest, token string) (resp *types.AddVerifyResponse, err error) {
 
 	resp = &types.AddVerifyResponse{
-		Repetition: make([]types.VerifyData, 0),
+		Repetition: make([]types.RepetitionVerifyData, 0),
 	}
 	strUserId, userName := GetUserInfo(l.svcCtx, token)
 	userId, _ := strconv.ParseInt(strUserId, 10, 64)
@@ -41,11 +41,16 @@ func (l *AddverifyLogic) Addverify(req *types.AddVerifyRequest, token string) (r
 	verifyType := req.VerifyType
 	dataList := req.Data
 
-	for _, info := range dataList {
+	for i, info := range dataList {
 		querySql := fmt.Sprintf("where verify_info = '%s'", info.VerifyInfo)
 		arrys, _ := l.svcCtx.OfficialVerify.CommonFind(l.ctx, querySql, "", "limit 1")
 		if len(arrys) > 0 {
-			resp.Repetition = append(resp.Repetition, info)
+			resp.Repetition = append(resp.Repetition, types.RepetitionVerifyData{
+				Index:      int64(i),
+				VerifyInfo: info.VerifyInfo,
+				JobTitle:   info.JobTitle,
+				IsPay:      info.IsPay,
+			})
 		}
 	}
 
@@ -63,7 +68,10 @@ func (l *AddverifyLogic) Addverify(req *types.AddVerifyRequest, token string) (r
 			CreatorId:  userId,
 			SocialName: convert.StrToNullString(req.SocialName),
 		}
-		l.svcCtx.OfficialVerify.Insert(l.ctx, officialVerify)
+		_, err := l.svcCtx.OfficialVerify.Insert(l.ctx, officialVerify)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 	return
 }
