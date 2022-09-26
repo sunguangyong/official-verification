@@ -323,18 +323,13 @@
             "$ref": "#/definitions/VerifyData"
           },
           "description": "验证内容"
-        },
-        "creator": {
-          "type": "string",
-          "description": " 创建人"
         }
       },
       "title": "AddVerifyRequest",
       "required": [
         "verifyType",
         "socialName",
-        "data",
-        "creator"
+        "data"
       ]
     },
     "AddVerifyResponse": {
@@ -343,7 +338,7 @@
         "repetition": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/VerifyData"
+            "$ref": "#/definitions/RepetitionVerifyData"
           },
           "description": " 重复内容"
         }
@@ -568,6 +563,10 @@
           "type": "string",
           "description": " 名称"
         },
+        "creator": {
+          "type": "string",
+          "description": " 名称"
+        },
         "isPay": {
           "type": "string",
           "description": " 接受付款"
@@ -575,10 +574,6 @@
         "jobTitle": {
           "type": "string",
           "description": " 职位"
-        },
-        "creator": {
-          "type": "string",
-          "description": " 创建人"
         },
         "createTime": {
           "type": "string",
@@ -591,9 +586,9 @@
         "verifyType",
         "verifyInfo",
         "socialName",
+        "creator",
         "isPay",
         "jobTitle",
-        "creator",
         "createTime"
       ]
     },
@@ -662,6 +657,33 @@
       "type": "object",
       "title": "MonitorResponse"
     },
+    "RepetitionVerifyData": {
+      "type": "object",
+      "properties": {
+        "index": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "verifyInfo": {
+          "type": "string"
+        },
+        "jobTitle": {
+          "type": "string",
+          "description": " 职位"
+        },
+        "isPay": {
+          "type": "string",
+          "description": " 是否接受付费 0 不接受 1 接受"
+        }
+      },
+      "title": "RepetitionVerifyData",
+      "required": [
+        "index",
+        "verifyInfo",
+        "jobTitle",
+        "isPay"
+      ]
+    },
     "SeekVerifyRequest": {
       "type": "object",
       "properties": {
@@ -722,10 +744,6 @@
         "isPay": {
           "type": "string",
           "description": " 是否接受付费 0 不接受 1 接受"
-        },
-        "creator": {
-          "type": "string",
-          "description": " 创建人"
         }
       },
       "title": "UpdateVerifyRequest",
@@ -735,13 +753,22 @@
         "socialName",
         "verifyInfo",
         "jobTitle",
-        "isPay",
-        "creator"
+        "isPay"
       ]
     },
     "UpdateVerifyResponse": {
       "type": "object",
-      "title": "UpdateVerifyResponse"
+      "properties": {
+        "isexist": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": " true 已存在 false 不存在"
+        }
+      },
+      "title": "UpdateVerifyResponse",
+      "required": [
+        "isexist"
+      ]
     },
     "VerifyData": {
       "type": "object",
