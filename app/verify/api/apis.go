@@ -28,12 +28,12 @@ func main() {
 	server := rest.MustNewServer(c.RestConf)
 	//server := rest.MustNewServer(c.RestConf, rest.WithCors("*"))
 
-
 	defer server.Stop()
 	logx.SetLevel(logx.InfoLevel)
 	handler.RegisterHandlers(server, ctx)
 	instance.NewRedis(c.VerifyRdb.Addr, c.VerifyRdb.Passwd)
 	server.Use(middleware.RateLimit)
+	//server.Use(middleware.JwtAuth)
 	//server.Use(middleware.Cors)
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()

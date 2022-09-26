@@ -2,6 +2,7 @@ package logic
 
 import (
 	"fmt"
+	"strconv"
 
 	"errors"
 
@@ -30,7 +31,8 @@ func NewUpdateverifyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Upda
 	}
 }
 
-func (l *UpdateverifyLogic) Updateverify(req *types.UpdateVerifyRequest) (resp *types.UpdateVerifyResponse, err error) {
+func (l *UpdateverifyLogic) Updateverify(req *types.UpdateVerifyRequest, token string) (resp *types.UpdateVerifyResponse,
+	err error) {
 	id := req.Id
 	data, err := l.svcCtx.OfficialVerify.FindOne(l.ctx, id)
 	if data == nil || err != nil {
@@ -50,12 +52,16 @@ func (l *UpdateverifyLogic) Updateverify(req *types.UpdateVerifyRequest) (resp *
 		return
 	}
 
+	strUserId, userName := GetUserInfo(l.svcCtx, token)
+	userId, _ := strconv.ParseInt(strUserId, 10, 64)
+
 	data.VerifyInfo = req.VerifyInfo
 	data.VerifyType = req.VerifyType
 	data.SocialName = convert.StrToNullString(req.SocialName)
 	data.JobTiele = convert.StrToNullString(req.JobTitle)
-	data.Creator = convert.StrToNullString(req.Creator)
+	data.Creator = convert.StrToNullString(userName)
 	data.IsPay = convert.StrToNullString(req.IsPay)
+	data.CreatorId = userId
 	err = l.svcCtx.OfficialVerify.Update(l.ctx, data)
 	if err != nil {
 		l.Logger.Error(err)

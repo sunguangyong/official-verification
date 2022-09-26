@@ -7,5 +7,5 @@ VerifyMysql:
 
 
 VerifyRdb:
-  Addr: 172.16.10.30:6379
+  Addr: 172.16.10.115:6379
   Passwd: Taione999

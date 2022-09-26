@@ -8,5 +8,5 @@ VerifyMysql:
 
 
 VerifyRdb:
-  Addr: 114.116.50.177:6379
-  Passwd:
+  Addr: 172.16.10.115:6379
+  Passwd: Taione999

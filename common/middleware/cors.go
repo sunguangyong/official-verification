@@ -8,8 +8,8 @@ import (
 
 func Cors(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		method := r.Method               //请求方法
-		fmt.Println("method" , method)
+		method := r.Method //请求方法
+		fmt.Println("method", method)
 		origin := r.Header.Get("Origin") //请求头部
 		var headerKeys []string          // 声明请求头keys
 		for k, _ := range r.Header {

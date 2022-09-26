@@ -4,6 +4,7 @@ go 1.17
 
 require (
 	github.com/SkyAPM/go2sky v1.5.0
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/pkg/errors v0.9.1
 	github.com/valyala/fastjson v1.6.3
 	github.com/xuri/excelize/v2 v2.6.1
