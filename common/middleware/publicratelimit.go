@@ -49,7 +49,7 @@ func PublicRateLimit(next http.HandlerFunc) http.HandlerFunc {
 			ip, _ := GetIP(r)
 			rlKey := instance.GetRedisPubRateLimitKey(path.GetValue(), ip)
 			l := limit.NewPeriodLimit(rate.Seconds, rate.Quota, rl, rlKey)
-			code, err := l.Take(rlKey)
+			code, err := l.Take("")
 			if err != nil {
 				logx.Error(err)
 			}

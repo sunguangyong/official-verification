@@ -4,6 +4,7 @@ import (
 	"cointiger.com/verification/app/verify/api/internal/svc"
 	"cointiger.com/verification/app/verify/api/internal/types"
 	"cointiger.com/verification/app/verify/model"
+	"cointiger.com/verification/common/constant"
 	"cointiger.com/verification/common/convert"
 	"cointiger.com/verification/common/instance"
 	"cointiger.com/verification/common/jwt"
@@ -126,7 +127,7 @@ func GetUserInfo(svc *svc.ServiceContext, token string) (userName string, loginU
 	token = strings.Replace(token, "Bearer ", "", -1)
 	tokenMap := jwt.ParseJwt(token)
 
-	v, ok := tokenMap["operate_login_user_id"]
+	v, ok := tokenMap[constant.LOGIN_USER_ID]
 	if ok {
 		loginUserId = v.(string)
 	} else {
