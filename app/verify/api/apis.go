@@ -5,7 +5,6 @@ import (
 	"cointiger.com/verification/app/verify/api/internal/handler"
 	"cointiger.com/verification/app/verify/api/internal/svc"
 	"cointiger.com/verification/common/instance"
-	"cointiger.com/verification/common/middleware"
 	"flag"
 	"fmt"
 	"github.com/zeromicro/go-zero/core/conf"
@@ -14,8 +13,7 @@ import (
 	_ "go.uber.org/automaxprocs"
 )
 
-var configFile = flag.String("f",
-	"/Users/sunguangyong/workspace/src/work/official-verification/app/verify/api/etc/local/apis.yaml", "the config file")
+var configFile = flag.String("f", "etc/dev/apis.yaml", "the config file")
 
 func main() {
 	flag.Parse()
@@ -33,7 +31,7 @@ func main() {
 	handler.RegisterHandlers(server, ctx)
 	instance.NewRedis(c.VerifyRdb.Addr, c.VerifyRdb.Passwd)
 	//server.Use(middleware.RateLimit)
-	server.Use(middleware.PublicRateLimit)
+	//server.Use(middleware.PublicRateLimit)
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()
 }
