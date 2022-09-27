@@ -125,7 +125,13 @@ type userInfo struct {
 func GetUserInfo(svc *svc.ServiceContext, token string) (userName string, loginUserId string) {
 	token = strings.Replace(token, "Bearer ", "", -1)
 	tokenMap := jwt.ParseJwt(token)
-	loginUserId = tokenMap["login_user_id"].(string)
+
+	v,ok := tokenMap["operate_login_user_id"];if ok {
+		loginUserId = v.(string)
+	} else {
+		return "", ""
+	}
+
 	loginUserKey := instance.GetRedisUserKey(loginUserId)
 	value, err := svc.VeriflyRedis.Get(loginUserKey)
 	value = strings.Replace(value, "Set", "", -1)
