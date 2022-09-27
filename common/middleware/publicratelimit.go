@@ -45,6 +45,7 @@ func PublicRateLimit(next http.HandlerFunc) http.HandlerFunc {
 		next(w, r)
 	}
 }
+
 func GetIP(r *http.Request) (string, error) {
 	ip := r.Header.Get("X-Real-IP")
 	if net.ParseIP(ip) != nil {

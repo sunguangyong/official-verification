@@ -18,7 +18,7 @@ type RateLimt struct {
 }
 
 var apiRateLimit = map[string]*RateLimt{
-	"/api/v3/market/all/detail": &RateLimt{QPS: 20, RateType: constant.ApiPublicRateLimit, SkipLimit: true},
+	"/api/offical/verify/informadd": &RateLimt{QPS: 20, RateType: constant.ApiPublicRateLimit, SkipLimit: false},
 }
 
 func RateLimit(next http.HandlerFunc) http.HandlerFunc {
