@@ -143,7 +143,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ListInformRequest"
+              "$ref": "#/definitions/ExportInformRequest"
             }
           }
         ],
@@ -432,6 +432,39 @@
       "required": [
         "verifyDropdown",
         "socialDropdown"
+      ]
+    },
+    "ExportInformRequest": {
+      "type": "object",
+      "properties": {
+        "verifyInfo": {
+          "type": "string",
+          "description": "验证内容"
+        },
+        "verifyType": {
+          "type": "string",
+          "description": " 验证类型"
+        },
+        "socialName": {
+          "type": "string",
+          "description": " social_name"
+        },
+        "startTime": {
+          "type": "string",
+          "description": " 开始时间"
+        },
+        "endTime": {
+          "type": "string",
+          "description": " 结束时间"
+        }
+      },
+      "title": "ExportInformRequest",
+      "required": [
+        "verifyInfo",
+        "verifyType",
+        "socialName",
+        "startTime",
+        "endTime"
       ]
     },
     "ExportInformResponse": {

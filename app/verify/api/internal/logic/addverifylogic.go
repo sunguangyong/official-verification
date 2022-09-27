@@ -35,7 +35,7 @@ func (l *AddverifyLogic) Addverify(req *types.AddVerifyRequest, token string) (r
 	resp = &types.AddVerifyResponse{
 		Repetition: make([]types.RepetitionVerifyData, 0),
 	}
-	strUserId, userName := GetUserInfo(l.svcCtx, token)
+	userName, strUserId := GetUserInfo(l.svcCtx, token)
 	userId, _ := strconv.ParseInt(strUserId, 10, 64)
 
 	verifyType := req.VerifyType
@@ -126,7 +126,8 @@ func GetUserInfo(svc *svc.ServiceContext, token string) (userName string, loginU
 	token = strings.Replace(token, "Bearer ", "", -1)
 	tokenMap := jwt.ParseJwt(token)
 
-	v,ok := tokenMap["operate_login_user_id"];if ok {
+	v, ok := tokenMap["operate_login_user_id"]
+	if ok {
 		loginUserId = v.(string)
 	} else {
 		return "", ""

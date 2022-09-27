@@ -25,8 +25,7 @@ func NewExportinformLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Expo
 	}
 }
 
-func (l *ExportinformLogic) Exportinform(req *types.ListInformRequest) (resp *types.ExportInformResponse, err error) {
-	// todo: add your logic here and delete this line
+func (l *ExportinformLogic) Exportinform(req *types.ExportInformRequest) (resp *types.ExportInformResponse, err error) {
 	var querySql string
 	queryList := make([]string, 0)
 	verifyInfo := req.VerifyInfo
@@ -60,7 +59,8 @@ func (l *ExportinformLogic) Exportinform(req *types.ListInformRequest) (resp *ty
 		querySql = "where " + strings.Join(queryList, " and ")
 	}
 
-	limitSql := fmt.Sprintf("limit %d, %d", (req.PageIndex-1)*req.PageSize, req.PageSize)
+	//limitSql := fmt.Sprintf("limit %d, %d", (req.PageIndex-1)*req.PageSize, req.PageSize)
+	limitSql := ""
 	orderSql := "order by id"
 
 	count, err := l.svcCtx.ReportRecord.FindNewsCount(l.ctx, querySql)

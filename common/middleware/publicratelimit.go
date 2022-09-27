@@ -22,10 +22,6 @@ func PublicRateLimit(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 		v, isOk := apiRateLimit[path.GetValue()]
-		if !isOk {
-			result.HttpResult(r, w, nil, xerr.NewErr(constant.REQUEST_PARAM_ERROR, path.Err))
-			return
-		}
 		if isOk && v.RateType == constant.ApiPublicRateLimit && !v.SkipLimit {
 			rl := instance.GetRedis()
 			rate, isOK := apiRateLimit[path.GetValue()]

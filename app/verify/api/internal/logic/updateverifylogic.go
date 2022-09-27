@@ -51,7 +51,7 @@ func (l *UpdateverifyLogic) Updateverify(req *types.UpdateVerifyRequest, token s
 		return
 	}
 
-	strUserId, userName := GetUserInfo(l.svcCtx, token)
+	userName, strUserId := GetUserInfo(l.svcCtx, token)
 	userId, _ := strconv.ParseInt(strUserId, 10, 64)
 
 	data.VerifyInfo = req.VerifyInfo

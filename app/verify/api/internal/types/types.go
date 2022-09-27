@@ -91,6 +91,14 @@ type ListInformResponse struct {
 	Count int          `json:"count"` // 总数
 }
 
+type ExportInformRequest struct {
+	VerifyInfo string `json:"verifyInfo"` //验证内容
+	VerifyType string `json:"verifyType"` // 验证类型
+	SocialName string `json:"socialName"` // social_name
+	StartTime  string `json:"startTime"`  // 开始时间
+	EndTime    string `json:"endTime"`    // 结束时间
+}
+
 type ListInform struct {
 	VerifyInfo string `json:"verifyInfo"` //举报内容内容
 	VerifyType string `json:"verifyType"` // 验证类型
