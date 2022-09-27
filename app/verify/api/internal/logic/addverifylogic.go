@@ -6,7 +6,7 @@ import (
 	"cointiger.com/verification/app/verify/model"
 	"cointiger.com/verification/common/convert"
 	"cointiger.com/verification/common/instance"
-	"cointiger.com/verification/common/parsetoken"
+	"cointiger.com/verification/common/jwt"
 	"context"
 	"fmt"
 	"strconv"
@@ -124,7 +124,7 @@ type userInfo struct {
 
 func GetUserInfo(svc *svc.ServiceContext, token string) (userName string, loginUserId string) {
 	token = strings.Replace(token, "Bearer ", "", -1)
-	tokenMap := parsetoken.ParseJwt(token)
+	tokenMap := jwt.ParseJwt(token)
 	loginUserId = tokenMap["login_user_id"].(string)
 	loginUserKey := instance.GetRedisUserKey(loginUserId)
 	value, err := svc.VeriflyRedis.Get(loginUserKey)

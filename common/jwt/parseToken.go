@@ -1,4 +1,4 @@
-package parsetoken
+package jwt
 
 import (
 	"fmt"
