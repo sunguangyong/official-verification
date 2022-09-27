@@ -20,6 +20,6 @@ func monitorHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := logic.NewMonitorLogic(r.Context(), svcCtx)
 		resp, err := l.Monitor(&req)
-		result.HttpResult(r, w, resp, err)
+		result.HttpResult(r, w, req, resp, err)
 	}
 }

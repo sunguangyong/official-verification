@@ -20,6 +20,6 @@ func drupdownHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := logic.NewDrupdownLogic(r.Context(), svcCtx)
 		resp, err := l.Drupdown(&req)
-		result.HttpResult(r, w, resp, err)
+		result.HttpResult(r, w, req, resp, err)
 	}
 }

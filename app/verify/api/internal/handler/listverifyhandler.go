@@ -20,6 +20,6 @@ func listverifyHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := logic.NewListverifyLogic(r.Context(), svcCtx)
 		resp, err := l.Listverify(&req)
-		result.HttpResult(r, w, resp, err)
+		result.HttpResult(r, w, req, resp, err)
 	}
 }

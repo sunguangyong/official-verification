@@ -20,6 +20,6 @@ func addinformHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := logic.NewAddinformLogic(r.Context(), svcCtx)
 		resp, err := l.Addinform(&req)
-		result.HttpResult(r, w, resp, err)
+		result.HttpResult(r, w, req, resp, err)
 	}
 }

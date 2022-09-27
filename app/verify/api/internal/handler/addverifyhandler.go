@@ -20,6 +20,6 @@ func addverifyHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		token := r.Header.Get("Authorization")
 		l := logic.NewAddverifyLogic(r.Context(), svcCtx)
 		resp, err := l.Addverify(&req, token)
-		result.HttpResult(r, w, resp, err)
+		result.HttpResult(r, w, req, resp, err)
 	}
 }

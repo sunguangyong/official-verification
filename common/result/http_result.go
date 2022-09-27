@@ -4,18 +4,17 @@ import (
 	"cointiger.com/verification/common/constant"
 	"fmt"
 	"net/http"
+	"runtime/debug"
 
 	"cointiger.com/verification/common/xerr"
-
+	"encoding/json"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"google.golang.org/grpc/status"
 )
 
-//http返回
-func HttpResult(r *http.Request, w http.ResponseWriter, resp interface{}, err error) {
-
+func HttpResult(r *http.Request, w http.ResponseWriter, req, resp interface{}, err error) {
 	if err == nil {
 		//成功返回
 		r := Success(resp)
@@ -30,18 +29,31 @@ func HttpResult(r *http.Request, w http.ResponseWriter, resp interface{}, err er
 			//自定义CodeError
 			errcode = e.GetErrCode()
 			errmsg = e.GetErrMsg()
-		} else {
-			if gstatus, ok := status.FromError(causeErr); ok { // grpc err错误
-				grpcCode := uint32(gstatus.Code())
-				if xerr.IsCodeErr(grpcCode) { //区分自定义错误跟系统底层、db等错误，底层、db错误不能返回给前端
-					errcode = grpcCode
-					errmsg = gstatus.Message()
-				}
-			}
+			httpx.WriteJson(w, http.StatusBadRequest, Error(errcode, errmsg))
+			return
+		}
+		if e, ok := causeErr.(*xerr.CtxErr); ok {
+			reqBytes, _ := json.Marshal(req)
+			responseBytes, _ := json.Marshal(resp)
+			logx.WithContext(r.Context()).Errorf("【API-CTX-ERR】Request:%v,Response:%v,ctx:%v,err:%v,stack:%v", string(reqBytes), string(responseBytes), e.Content, err, string(debug.Stack()))
+			httpx.WriteJson(w, http.StatusBadRequest, Error(errcode, errmsg))
+			return
 		}
 
-		logx.WithContext(r.Context()).Errorf("【API-ERR】 : %+v ", err)
+		if gstatus, ok := status.FromError(causeErr); ok { // grpc err错误
+			grpcCode := uint32(gstatus.Code())
+			if xerr.IsCodeErr(grpcCode) { //区分自定义错误跟系统底层、db等错误，底层、db错误不能返回给前端
+				errcode = grpcCode
+				errmsg = gstatus.Message()
+			}
+			httpx.WriteJson(w, http.StatusBadRequest, Error(errcode, errmsg))
+			return
+		}
+		reqBytes, _ := json.Marshal(req)
+		responseBytes, _ := json.Marshal(resp)
+		logx.WithContext(r.Context()).Errorf("【API-UNKNOW-ERR】Request:%v,Response:%v,err:%v,stack:%v", string(reqBytes), string(responseBytes), err, string(debug.Stack()))
 		httpx.WriteJson(w, http.StatusBadRequest, Error(errcode, errmsg))
+		return
 	}
 }
 

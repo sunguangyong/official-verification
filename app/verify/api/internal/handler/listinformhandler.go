@@ -20,6 +20,6 @@ func listinformHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := logic.NewListinformLogic(r.Context(), svcCtx)
 		resp, err := l.Listinform(&req)
-		result.HttpResult(r, w, resp, err)
+		result.HttpResult(r, w, req, resp, err)
 	}
 }
