@@ -16,4 +16,4 @@ ENV TZ Asia/Shanghai
 WORKDIR /cmd
 COPY --from=builder /cmd/verification /cmd/verification
 COPY --from=builder /cmd/etc /cmd/etc
-CMD ["./verification", "-f", "etc/dev/apis.yaml"]
+CMD ["./verification", "-f", "etc/pro/apis.yaml"]

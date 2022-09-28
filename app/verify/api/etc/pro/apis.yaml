@@ -2,5 +2,9 @@ Name: Operate
 Host: 0.0.0.0
 Port: 8888
 
-TelegramBotMysql:
-  DataSource: root:qIlRn)muX83d@tcp(82.156.56.237:3306)/telegram_bot?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+VerifyMysql:
+  DataSource: op-admin:BxNoD8yXGOiU4xXHm1y2@tcp(aurora-mysql-5-7.cluster-c26fsp8dnn1y.ap-northeast-1.rds.amazonaws.com:3306)/exchange_bom?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+VerifyRdb:
+  Addr: 10.88.9.26:6379
+  Passwd: Taione999
