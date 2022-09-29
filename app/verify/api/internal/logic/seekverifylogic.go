@@ -32,11 +32,11 @@ func (l *SeekverifyLogic) Seekverify(req *types.SeekVerifyRequest) (resp *types.
 		VerifyList: make([]types.ListVerify, 0),
 	}
 
-	if len(req.VerifyInfo) > 10 {
+	if len(req.VerifyInfo) > 1024 {
 		return nil, xerr.NewParamsErr("verifyInfo", req.VerifyInfo)
 	}
 
-	if len(req.VerifyType) > 10 {
+	if len(req.VerifyType) > 50 {
 		return nil, xerr.NewParamsErr("verifyType", req.VerifyType)
 	}
 
