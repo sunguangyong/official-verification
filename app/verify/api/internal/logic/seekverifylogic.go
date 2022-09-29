@@ -2,6 +2,7 @@ package logic
 
 import (
 	"cointiger.com/verification/app/verify/model"
+	"cointiger.com/verification/common/xerr"
 	"context"
 	"fmt"
 	"strings"
@@ -29,6 +30,14 @@ func NewSeekverifyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Seekve
 func (l *SeekverifyLogic) Seekverify(req *types.SeekVerifyRequest) (resp *types.SeekVerifyResponse, err error) {
 	resp = &types.SeekVerifyResponse{
 		VerifyList: make([]types.ListVerify, 0),
+	}
+
+	if len(req.VerifyInfo) > 10 {
+		return nil, xerr.NewParamsErr("verifyInfo", req.VerifyInfo)
+	}
+
+	if len(req.VerifyType) > 10 {
+		return nil, xerr.NewParamsErr("verifyType", req.VerifyType)
 	}
 
 	var listVerify []*model.OfficialVerify

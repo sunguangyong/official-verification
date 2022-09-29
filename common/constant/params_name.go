@@ -1,9 +1,6 @@
 package constant
 
-const (
-
-
-)
+const ()
 
 //api限流
 const (
