@@ -61,7 +61,8 @@ func (l *ExportinformLogic) Exportinform(req *types.ExportInformRequest) (resp *
 
 	//limitSql := fmt.Sprintf("limit %d, %d", (req.PageIndex-1)*req.PageSize, req.PageSize)
 	limitSql := ""
-	orderSql := "order by id"
+	orderSql := "order by id desc"
+
 
 	count, err := l.svcCtx.ReportRecord.FindNewsCount(l.ctx, querySql)
 

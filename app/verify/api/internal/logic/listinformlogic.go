@@ -62,7 +62,7 @@ func (l *ListinformLogic) Listinform(req *types.ListInformRequest) (resp *types.
 	}
 
 	limitSql := fmt.Sprintf("limit %d, %d", (req.PageIndex-1)*req.PageSize, req.PageSize)
-	orderSql := "order by id"
+	orderSql := "order by id desc"
 
 	count, err := l.svcCtx.ReportRecord.FindNewsCount(l.ctx, querySql)
 
