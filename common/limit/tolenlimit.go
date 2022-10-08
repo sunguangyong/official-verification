@@ -114,7 +114,7 @@ func (lim *TokenLimiter) reserveN(now time.Time, n int) bool {
 		return false
 	}
 	if err != nil {
-		logx.Errorf("fail to use rate limiter: %s, use in-process limiter for rescue", err)
+		logx.Errorf("fail to use er: %s, use in-process limiter for rescue", err)
 		lim.startMonitor()
 		return lim.rescueLimiter.AllowN(now, n)
 	}

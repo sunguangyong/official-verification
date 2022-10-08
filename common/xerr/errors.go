@@ -3,6 +3,7 @@ package xerr
 import (
 	"cointiger.com/verification/common/constant"
 	"fmt"
+	"net/http"
 )
 
 /**
@@ -19,6 +20,23 @@ func (e *CodeError) GetErrCode() uint32 {
 	return e.errCode
 }
 
+var requestLanguage = map[string]string{
+	"ch": "zh_CN",
+	"tw": "zh_TW",
+	"en": "en_US",
+	"vi": "vi_VN",
+	"ru": "ru_RU",
+	"ko": "ko_KR",
+	"ja": "ja_JP",
+	"th": "th_TH",
+	"id": "id_ID",
+	"tr": "tr_TR",
+	"fr": "fr_FR",
+	"ar": "ar_AR",
+	"es": "es_ES",
+	"fa": "fa_FA",
+}
+
 //返回给前端显示端错误信息
 func (e *CodeError) GetErrMsg() string {
 	return e.errMsg
@@ -28,58 +46,49 @@ func (e *CodeError) Error() string {
 	return fmt.Sprintf("ErrCode:%d，ErrMsg:%s", e.errCode, e.errMsg)
 }
 
-func NewErrCodeMsg(errCode uint32, errMsg string) *CodeError {
-	return &CodeError{errCode: errCode, errMsg: errMsg}
-}
-func NewErrCode(errCode uint32) *CodeError {
-	return &CodeError{errCode: errCode, errMsg: MapErrMsg(errCode)}
-}
-
-func NewErrMsg(errMsg string) *CodeError {
-	return &CodeError{errCode: constant.SERVER_COMMON_ERROR, errMsg: errMsg}
-}
-
 func NewErr(code uint32, err error) *CodeError {
 	return &CodeError{errCode: code, errMsg: fmt.Sprintf("%v", err)}
 }
 
-func NewGetSymbolConfigErr() *CodeError {
-	return &CodeError{errCode: constant.SERVER_COMMON_ERROR, errMsg: "get symbol config error"}
+func NewRateLimitErr(r *http.Request) *CodeError {
+	language := r.Header.Get("language")
+	msg := "The request frequency is too fast, please try again later"
+
+	var errMsgMap = map[string]string{
+		"zh_CN": "请求频率太快，请稍后再试",
+		"zh_TW": "請求頻率太快，請稍後再試",
+		"fr_FR": "فرکانس درخواست خیلی سریع است ، لطفاً بعداً دوباره امتحان کنید",
+		"vi_VN": "Tần số yêu cầu quá nhanh, vui lòng thử lại sau",
+		"id_ID": "Minta frekuensi terlalu cepat. Silakan coba lagi nanti",
+		"ar_AR": "تردد الطلب سريع جدًا ، يرجى المحاولة مرة أخرى لاحقًا",
+		"en_US": "The request frequency is too fast, please try again later",
+	}
+
+	v, ok := errMsgMap[language]
+	if ok {
+		msg = v
+	}
+
+	return &CodeError{errCode: constant.REQUEST_RATE_LIMIT_ERROR, errMsg: msg}
 }
 
-func NewNotFountErr(code uint32, name, value string) *CodeError {
-	return &CodeError{errCode: code, errMsg: fmt.Sprintf("field:%s,value:%s,is not found", name, value)}
-}
+func NewParamsErr(language string) *CodeError {
+	msg := "The verification content is too long and cannot inquire"
 
-func NewRateLimitErr() *CodeError {
-	return &CodeError{errCode: constant.REQUEST_RATE_LIMIT_ERROR, errMsg: " touch rate limit"}
+	var errMsgMap = map[string]string{
+		"zh_CN": "验证内容过长，无法查询",
+		"zh_TW": "驗證內容過長，無法查詢",
+		"fr_FR": "محتوای تأیید خیلی طولانی است و نمی تواند پرس و جو کند",
+		"vi_VN": "Nội dung xác minh quá dài và không thể hỏi",
+		"id_ID": "Konten verifikasi terlalu lama dan tidak dapat menanyakan",
+		"ar_AR": "محتوى التحقق طويل جدًا ولا يمكن الاستفسار",
+		"en_US": "The verification content is too long and cannot inquire",
+	}
 
-}
+	v, ok := errMsgMap[language]
+	if ok {
+		msg = v
+	}
 
-func NewParamsErr(name, value string) *CodeError {
-	return &CodeError{errCode: constant.REQUEST_PARAM_ERROR, errMsg: fmt.Sprintf("field:%s,value:%s error", name, value)}
-}
-
-func NewReqParamsErr() *CodeError {
-	return &CodeError{errCode: constant.REQUEST_PARAM_ERROR, errMsg: "req error"}
-}
-
-func NewNoPermission() *CodeError {
-	return &CodeError{errCode: constant.REQUEST_NO_PERMISSION, errMsg: "no permission"}
-}
-
-func NewInvaildSymbolErr(symbol string) *CodeError {
-	return &CodeError{errCode: constant.REQUEST_SYMBOL_ERROR, errMsg: fmt.Sprintf("symbol:%s is invaild", symbol)}
-}
-
-func NewSymbolNotOpenErr(symbol string) *CodeError {
-	return &CodeError{errCode: constant.REQUEST_SYMBOL_ERROR, errMsg: fmt.Sprintf("symbol:%s is not open", symbol)}
-}
-
-func NewLimitExceeded(field string) *CodeError {
-	return &CodeError{errCode: constant.REQUEST_PARAM_ERROR, errMsg: fmt.Sprintf("field:%s, limit exceeded", field)}
-}
-
-func NewServerError() *CodeError {
-	return &CodeError{errCode: constant.SERVER_COMMON_ERROR, errMsg: "server error"}
+	return &CodeError{errCode: constant.REQUEST_PARAM_ERROR, errMsg: msg}
 }

@@ -42,7 +42,6 @@ func PublicRateLimit(next http.HandlerFunc) http.HandlerFunc {
 			rate, isOK := apiRateLimit[path.GetValue()]
 			fmt.Println(rate)
 			if !isOK {
-				result.HttpResult(r, w, nil, nil, xerr.NewParamsErr(constant.ApiKeyParamName, path.GetValue()))
 				return
 			}
 
@@ -59,7 +58,7 @@ func PublicRateLimit(next http.HandlerFunc) http.HandlerFunc {
 			switch code {
 			case limit.OverQuota: // 超过限制
 				logx.Errorf("OverQuota key: %v", rlKey)
-				result.HttpResult(r, w, nil, nil, xerr.NewRateLimitErr())
+				result.HttpResult(r, w, nil, nil, xerr.NewRateLimitErr(r))
 				return
 
 			case limit.Allowed: // 通过

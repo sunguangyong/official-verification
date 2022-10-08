@@ -19,7 +19,8 @@ func seekverifyHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := logic.NewSeekverifyLogic(r.Context(), svcCtx)
-		resp, err := l.Seekverify(&req)
+		language := r.Header.Get("language")
+		resp, err := l.Seekverify(&req, language)
 		result.HttpResult(r, w, req, resp, err)
 	}
 }

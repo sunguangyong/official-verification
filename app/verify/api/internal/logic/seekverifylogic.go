@@ -27,17 +27,18 @@ func NewSeekverifyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Seekve
 	}
 }
 
-func (l *SeekverifyLogic) Seekverify(req *types.SeekVerifyRequest) (resp *types.SeekVerifyResponse, err error) {
+func (l *SeekverifyLogic) Seekverify(req *types.SeekVerifyRequest, language string) (resp *types.SeekVerifyResponse,
+	err error) {
 	resp = &types.SeekVerifyResponse{
 		VerifyList: make([]types.ListVerify, 0),
 	}
 
 	if len(req.VerifyInfo) > 1024 {
-		return nil, xerr.NewParamsErr("verifyInfo", req.VerifyInfo)
+		return nil, xerr.NewParamsErr(language)
 	}
 
 	if len(req.VerifyType) > 50 {
-		return nil, xerr.NewParamsErr("verifyType", req.VerifyType)
+		return nil, xerr.NewParamsErr(language)
 	}
 
 	var listVerify []*model.OfficialVerify

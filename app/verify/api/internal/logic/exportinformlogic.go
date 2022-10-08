@@ -63,7 +63,6 @@ func (l *ExportinformLogic) Exportinform(req *types.ExportInformRequest) (resp *
 	limitSql := ""
 	orderSql := "order by id desc"
 
-
 	count, err := l.svcCtx.ReportRecord.FindNewsCount(l.ctx, querySql)
 
 	if err != nil {
