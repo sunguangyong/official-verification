@@ -125,6 +125,8 @@ func (l *SeekverifyLogic) telegramUsername(req *types.SeekVerifyRequest) (listVe
 		verifyInfo = req.VerifyInfo
 	}
 
+	verifyInfo = strings.Replace(verifyInfo,"https://t.me/","",-1)
+
 	querySql := fmt.Sprintf("where verify_type = '%s' and verify_info ='%s' ", req.VerifyType, verifyInfo)
 	verifyList, err := l.svcCtx.OfficialVerify.CommonFind(l.ctx, querySql, "", "")
 
