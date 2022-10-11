@@ -5,7 +5,7 @@ import (
 	"cointiger.com/verification/common/xerr"
 	"context"
 	"fmt"
-	"regexp"
+	"net/url"
 	"strings"
 
 	"cointiger.com/verification/app/verify/api/internal/svc"
@@ -79,10 +79,14 @@ func (l *SeekverifyLogic) Seekverify(req *types.SeekVerifyRequest, language stri
 
 func (l *SeekverifyLogic) website(req *types.SeekVerifyRequest) (listVerify []*model.OfficialVerify, err error) {
 	listVerify = make([]*model.OfficialVerify, 0)
-	patt :=`^((http://)|(https://))?([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}(/)`
-	reg := regexp.MustCompile(patt)
-	domain := reg.FindString(req.VerifyInfo)
-	querySql := fmt.Sprintf("where verify_type = '%s' and verify_info ='%s' ", req.VerifyType, domain)
+
+	u, err := url.Parse(req.VerifyInfo)
+	if err != nil {
+		l.Logger.Error(err)
+		return
+	}
+
+	querySql := fmt.Sprintf("where verify_type = '%s' and verify_info ='%s' ", req.VerifyType, u.Hostname())
 
 	verifyList, err := l.svcCtx.OfficialVerify.CommonFind(l.ctx, querySql, "", "")
 
