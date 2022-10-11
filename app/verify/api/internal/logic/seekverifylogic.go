@@ -79,6 +79,7 @@ func (l *SeekverifyLogic) Seekverify(req *types.SeekVerifyRequest, language stri
 
 func (l *SeekverifyLogic) website(req *types.SeekVerifyRequest) (listVerify []*model.OfficialVerify, err error) {
 	listVerify = make([]*model.OfficialVerify, 0)
+	var domain string
 
 	u, err := url.Parse(req.VerifyInfo)
 	if err != nil {
@@ -86,7 +87,13 @@ func (l *SeekverifyLogic) website(req *types.SeekVerifyRequest) (listVerify []*m
 		return
 	}
 
-	querySql := fmt.Sprintf("where verify_type = '%s' and verify_info ='%s' ", req.VerifyType, u.Hostname())
+	if u.Hostname() == "" {
+		domain = req.VerifyInfo
+	} else {
+		domain = u.Hostname()
+	}
+
+	querySql := fmt.Sprintf("where verify_type = '%s' and verify_info ='%s' ", req.VerifyType, domain)
 
 	verifyList, err := l.svcCtx.OfficialVerify.CommonFind(l.ctx, querySql, "", "")
 
