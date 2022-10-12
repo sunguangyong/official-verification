@@ -88,7 +88,7 @@ func (l *SeekverifyLogic) website(req *types.SeekVerifyRequest) (listVerify []*m
 	}
 
 	if u.Hostname() == "" {
-		domain = req.VerifyInfo
+		domain = strings.Split(req.VerifyInfo,"/")[0]
 	} else {
 		domain = u.Hostname()
 	}
