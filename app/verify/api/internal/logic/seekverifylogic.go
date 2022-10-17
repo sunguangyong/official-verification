@@ -81,20 +81,19 @@ func (l *SeekverifyLogic) website(req *types.SeekVerifyRequest) (listVerify []*m
 	listVerify = make([]*model.OfficialVerify, 0)
 	var domain string
 
-	u, err := url.Parse(req.VerifyInfo)
-	if err != nil {
-		l.Logger.Error(err)
-		return
-	}
+	httpOk := strings.HasPrefix(req.VerifyInfo, "https://")
+	httpsOk := strings.HasPrefix(req.VerifyInfo, "http://")
 
-	if u.Hostname() == "" {
-		domain = strings.Split(req.VerifyInfo,"/")[0]
-	} else {
+	if httpsOk || httpOk {
+		u, _ := url.Parse(req.VerifyInfo)
 		domain = u.Hostname()
 	}
 
-	querySql := fmt.Sprintf("where verify_type = '%s' and verify_info ='%s' ", req.VerifyType, domain)
+	if domain == "" {
+		domain = strings.Split(req.VerifyInfo,"/")[0]
+	}
 
+	querySql := fmt.Sprintf("where verify_type = '%s' and verify_info ='%s' ", req.VerifyType, domain)
 	verifyList, err := l.svcCtx.OfficialVerify.CommonFind(l.ctx, querySql, "", "")
 
 	if err != nil {
