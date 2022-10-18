@@ -102,6 +102,7 @@ func (l *SeekverifyLogic) website(req *types.SeekVerifyRequest) (listVerify []*m
 	}
 
 	for _, verify := range verifyList {
+		verify.VerifyInfo = "https://" + verify.VerifyInfo
 		listVerify = append(listVerify, verify)
 	}
 
