@@ -28,14 +28,33 @@ func (l *DrupdownLogic) Drupdown(req *types.DropdownRequest) (resp *types.Dropdo
 		SocialDropdown: make([]types.Dropdown, 0),
 		VerifyDropdown: make([]types.Dropdown, 0),
 	}
-	verifyList, _ := l.svcCtx.VerifyEnum.CommonFind(l.ctx, "where is_delete = 0 ", "", "")
+	//verifyList, _ := l.svcCtx.VerifyEnum.CommonFind(l.ctx, "where is_delete = 0 ", "", "")
 	socialList, _ := l.svcCtx.SocialEnum.CommonFind(l.ctx, "where is_delete = 0 ", "", "")
 
-	for _, data := range verifyList {
-		resp.VerifyDropdown = append(resp.VerifyDropdown, types.Dropdown{
-			Label: data.VerifyType,
-			Value: data.VerifyType,
-		})
+	//for _, data := range verifyList {
+	//	resp.VerifyDropdown = append(resp.VerifyDropdown, types.Dropdown{
+	//		Label: data.VerifyType,
+	//		Value: data.VerifyType,
+	//	})
+	//}
+
+	resp.VerifyDropdown = []types.Dropdown {
+		types.Dropdown{
+			Value: "Website",
+			Label: "Website Verification",
+		},
+		types.Dropdown{
+			Value: "Social media",
+			Label: "Social media",
+		},
+		types.Dropdown{
+			Value: "Telegram Username",
+			Label: "Telegram Account",
+		},
+		types.Dropdown{
+			Value: "Discord ID",
+			Label: "Discord Account",
+		},
 	}
 
 	for _, data := range socialList {
