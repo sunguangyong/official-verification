@@ -119,9 +119,9 @@ func (l *SeekverifyLogic) common(req *types.SeekVerifyRequest) (listVerify []*mo
 
 	verifyInfo := req.VerifyInfo
 
-	verifyInfo = strings.Replace(verifyInfo,"http://www.","", -1)
+	verifyInfo = strings.Replace(verifyInfo,"http://","", -1)
 
-	verifyInfo = strings.Replace(verifyInfo,"https://www.","", -1)
+	verifyInfo = strings.Replace(verifyInfo,"https://","", -1)
 
 
 	querySql := fmt.Sprintf("where verify_type = '%s' and verify_info ='%s' ", req.VerifyType, verifyInfo)
@@ -133,7 +133,7 @@ func (l *SeekverifyLogic) common(req *types.SeekVerifyRequest) (listVerify []*mo
 	}
 
 	for _, verify := range verifyList {
-		verify.VerifyInfo = "https://www." + verify.VerifyInfo
+		verify.VerifyInfo = "https://" + verify.VerifyInfo
 		listVerify = append(listVerify, verify)
 	}
 
