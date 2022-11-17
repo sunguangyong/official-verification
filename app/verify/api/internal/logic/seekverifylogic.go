@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"regexp"
 	"strings"
 
 	"cointiger.com/verification/app/verify/api/internal/svc"
@@ -93,7 +94,37 @@ func (l *SeekverifyLogic) website(req *types.SeekVerifyRequest) (listVerify []*m
 		domain = strings.Split(req.VerifyInfo,"/")[0]
 	}
 
-	querySql := fmt.Sprintf("where verify_type = '%s' and verify_info ='%s' ", req.VerifyType, domain)
+    rootDomain := getRootDoman(domain)
+    //fmt.Println("sssssssss",rootDomain)
+
+	querySql := fmt.Sprintf("where verify_type = '%s' and verify_info ='%s' ", req.VerifyType, rootDomain)
+	verifyList, err := l.svcCtx.OfficialVerify.CommonFind(l.ctx, querySql, "", "")
+
+	if err != nil {
+		l.Logger.Error(err)
+		return
+	}
+
+	for _, verify := range verifyList {
+		//verify.VerifyInfo = "https://" + verify.VerifyInfo
+		verify.VerifyInfo = req.VerifyInfo
+		listVerify = append(listVerify, verify)
+	}
+
+	return
+}
+
+func (l *SeekverifyLogic) common(req *types.SeekVerifyRequest) (listVerify []*model.OfficialVerify, err error) {
+	listVerify = make([]*model.OfficialVerify, 0)
+
+	verifyInfo := req.VerifyInfo
+
+	verifyInfo = strings.Replace(verifyInfo,"http://","", -1)
+
+	verifyInfo = strings.Replace(verifyInfo,"https://","", -1)
+
+
+	querySql := fmt.Sprintf("where verify_type = '%s' and verify_info ='%s' ", req.VerifyType, verifyInfo)
 	verifyList, err := l.svcCtx.OfficialVerify.CommonFind(l.ctx, querySql, "", "")
 
 	if err != nil {
@@ -103,23 +134,6 @@ func (l *SeekverifyLogic) website(req *types.SeekVerifyRequest) (listVerify []*m
 
 	for _, verify := range verifyList {
 		verify.VerifyInfo = "https://" + verify.VerifyInfo
-		listVerify = append(listVerify, verify)
-	}
-
-	return
-}
-
-func (l *SeekverifyLogic) common(req *types.SeekVerifyRequest) (listVerify []*model.OfficialVerify, err error) {
-	listVerify = make([]*model.OfficialVerify, 0)
-	querySql := fmt.Sprintf("where verify_type = '%s' and verify_info ='%s' ", req.VerifyType, req.VerifyInfo)
-	verifyList, err := l.svcCtx.OfficialVerify.CommonFind(l.ctx, querySql, "", "")
-
-	if err != nil {
-		l.Logger.Error(err)
-		return
-	}
-
-	for _, verify := range verifyList {
 		listVerify = append(listVerify, verify)
 	}
 
@@ -140,6 +154,8 @@ func (l *SeekverifyLogic) telegramUsername(req *types.SeekVerifyRequest) (listVe
 
 	verifyInfo = strings.Replace(verifyInfo,"https://t.me/","",-1)
 
+	verifyInfo = strings.Replace(verifyInfo,"http://t.me/","",-1)
+
 	querySql := fmt.Sprintf("where verify_type = '%s' and verify_info ='%s' ", req.VerifyType, verifyInfo)
 	verifyList, err := l.svcCtx.OfficialVerify.CommonFind(l.ctx, querySql, "", "")
 
@@ -153,4 +169,14 @@ func (l *SeekverifyLogic) telegramUsername(req *types.SeekVerifyRequest) (listVe
 	}
 
 	return
+}
+
+func getRootDoman(str string) string {
+	_, err := regexp.MatchString("(\\w*\\.?){1}\\.(com.cn|net.cn|gov.cn|org\\.nz|org.cn|com|net|org|gov|cc|biz|info|cn|co)$", str)
+	if err != nil {
+		fmt.Println("Match error: ",err.Error())
+	}
+	reg := regexp.MustCompile("(\\w*\\.?){1}\\.(com.cn|net.cn|gov.cn|org\\.nz|org.cn|com|net|org|gov|cc|biz|info|cn|co)$")
+	data := reg.Find([]byte(str))
+	return string(data)
 }
