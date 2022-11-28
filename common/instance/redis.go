@@ -18,7 +18,7 @@ func GetRedis() (instance *redis.Redis) {
 
 func NewRedis(addr, pass string) (instance *redis.Redis) {
 	redisOnce.Do(func() {
-		rl = redis.New(addr, redis.WithPass(pass))
+		rl = redis.New(addr, redis.WithPass(pass),redis.Cluster())
 		rl.Ping()
 	})
 	return rl
