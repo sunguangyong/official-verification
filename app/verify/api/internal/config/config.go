@@ -11,7 +11,7 @@ type Config struct {
 	}
 
 	VerifyRdb struct {
-		Addr   string
+		Addr   []string
 		Passwd string
 	}
 }

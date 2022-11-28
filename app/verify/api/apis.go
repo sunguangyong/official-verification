@@ -6,6 +6,7 @@ import (
 	"cointiger.com/verification/app/verify/api/internal/svc"
 	"cointiger.com/verification/common/instance"
 	"cointiger.com/verification/common/middleware"
+	"cointiger.com/verification/common/random"
 	"flag"
 	"fmt"
 	"github.com/zeromicro/go-zero/core/conf"
@@ -29,7 +30,7 @@ func main() {
 	defer server.Stop()
 	logx.SetLevel(logx.InfoLevel)
 	handler.RegisterHandlers(server, ctx)
-	instance.NewRedis(c.VerifyRdb.Addr, c.VerifyRdb.Passwd)
+	instance.NewRedis(random.RandomStringArry(c.VerifyRdb.Addr), c.VerifyRdb.Passwd)
 	server.Use(middleware.PublicRateLimit)
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()
