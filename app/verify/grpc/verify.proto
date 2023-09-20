@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package verify;
+option go_package="./verify";
+
+message ListInformRequest {
+  string verifyInfo = 1;
+  int64 pageIndex = 2;
+  int64 pageSize = 3;
+  string verifyType = 4;
+  string socialName = 5;
+  string startTime = 6;
+  string endTime = 7;
+}
+
+message ListInform {
+  string verifyInfo = 1;
+  string verifyType = 2;
+  string socialName = 3;
+  string createTime = 4;
+}
+
+message ListInformResponse {
+  repeated ListInform list = 1;
+  int32 count = 2;
+}
+
+service Verify {
+  rpc ListInform(ListInformRequest) returns(ListInformResponse);
+}
