@@ -15,3 +15,10 @@ VerifyRpcConf:
     Hosts:
       - 121.91.171.184:2379
     Key: verify.rpc
+
+#链路追踪
+Telemetry:
+  Name: gateway-external
+  Endpoint: http://121.91.171.184:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
