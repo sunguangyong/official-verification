@@ -11,6 +11,7 @@ VerifyRdb:
 
 #rpc
 VerifyRpcConf:
-  Endpoints:
-    - 127.0.0.1:8080
-  NonBlock: true
+  Etcd:
+    Hosts:
+      - 121.91.171.184:2379
+    Key: verify.rpc

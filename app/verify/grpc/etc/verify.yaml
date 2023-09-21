@@ -10,5 +10,5 @@ VerifyRdb:
 
 Etcd:
   Hosts:
-  - 82.156.56.237:32380
+  - 121.91.171.184:2379
   Key: verify.rpc
