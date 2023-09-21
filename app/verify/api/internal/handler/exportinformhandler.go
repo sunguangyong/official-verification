@@ -1,10 +1,11 @@
 package handler
 
 import (
-	"cointiger.com/verification/common/excel"
 	"fmt"
 	"net/http"
 	"time"
+
+	"cointiger.com/verification/common/excel"
 
 	"cointiger.com/verification/app/verify/api/internal/logic"
 	"cointiger.com/verification/app/verify/api/internal/svc"

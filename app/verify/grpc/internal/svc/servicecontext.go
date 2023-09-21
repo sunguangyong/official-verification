@@ -8,7 +8,7 @@ import (
 )
 
 type ServiceContext struct {
-	Config config.Config
+	Config         config.Config
 	VeriflyRedis   *redis.Redis
 	OfficialVerify model.OfficialVerifyModel
 	VerifyEnum     model.VerifyEnumModel
@@ -18,7 +18,7 @@ type ServiceContext struct {
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
-		Config: c,
+		Config:         c,
 		VeriflyRedis:   redis.New(c.VerifyRdb.Addr, redis.WithPass(c.VerifyRdb.Passwd)),
 		OfficialVerify: model.NewOfficialVerifyModel(sqlx.NewMysql(c.VerifyMysql.DataSource)),
 		VerifyEnum:     model.NewVerifyEnumModel(sqlx.NewMysql(c.VerifyMysql.DataSource)),
@@ -26,4 +26,3 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		ReportRecord:   model.NewReportRecordModel(sqlx.NewMysql(c.VerifyMysql.DataSource)),
 	}
 }
-

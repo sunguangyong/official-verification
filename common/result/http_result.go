@@ -1,13 +1,15 @@
 package result
 
 import (
-	"cointiger.com/verification/common/constant"
 	"fmt"
 	"net/http"
 	"runtime/debug"
 
-	"cointiger.com/verification/common/xerr"
+	"cointiger.com/verification/common/constant"
+
 	"encoding/json"
+
+	"cointiger.com/verification/common/xerr"
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/rest/httpx"

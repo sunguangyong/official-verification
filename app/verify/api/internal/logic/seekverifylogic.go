@@ -1,13 +1,14 @@
 package logic
 
 import (
-	"cointiger.com/verification/app/verify/model"
-	"cointiger.com/verification/common/xerr"
 	"context"
 	"fmt"
 	"net/url"
 	"regexp"
 	"strings"
+
+	"cointiger.com/verification/app/verify/model"
+	"cointiger.com/verification/common/xerr"
 
 	"cointiger.com/verification/app/verify/api/internal/svc"
 	"cointiger.com/verification/app/verify/api/internal/types"
@@ -91,11 +92,11 @@ func (l *SeekverifyLogic) website(req *types.SeekVerifyRequest) (listVerify []*m
 	}
 
 	if domain == "" {
-		domain = strings.Split(req.VerifyInfo,"/")[0]
+		domain = strings.Split(req.VerifyInfo, "/")[0]
 	}
 
-    rootDomain := getRootDoman(domain)
-    //fmt.Println("sssssssss",rootDomain)
+	rootDomain := getRootDoman(domain)
+	//fmt.Println("sssssssss",rootDomain)
 
 	querySql := fmt.Sprintf("where verify_type = '%s' and verify_info ='%s' ", req.VerifyType, rootDomain)
 	verifyList, err := l.svcCtx.OfficialVerify.CommonFind(l.ctx, querySql, "", "")
@@ -119,10 +120,9 @@ func (l *SeekverifyLogic) common(req *types.SeekVerifyRequest) (listVerify []*mo
 
 	verifyInfo := req.VerifyInfo
 
-	verifyInfo = strings.Replace(verifyInfo,"http://","", -1)
+	verifyInfo = strings.Replace(verifyInfo, "http://", "", -1)
 
-	verifyInfo = strings.Replace(verifyInfo,"https://","", -1)
-
+	verifyInfo = strings.Replace(verifyInfo, "https://", "", -1)
 
 	querySql := fmt.Sprintf("where verify_type = '%s' and verify_info ='%s' ", req.VerifyType, verifyInfo)
 	verifyList, err := l.svcCtx.OfficialVerify.CommonFind(l.ctx, querySql, "", "")
@@ -152,9 +152,9 @@ func (l *SeekverifyLogic) telegramUsername(req *types.SeekVerifyRequest) (listVe
 		verifyInfo = req.VerifyInfo
 	}
 
-	verifyInfo = strings.Replace(verifyInfo,"https://t.me/","",-1)
+	verifyInfo = strings.Replace(verifyInfo, "https://t.me/", "", -1)
 
-	verifyInfo = strings.Replace(verifyInfo,"http://t.me/","",-1)
+	verifyInfo = strings.Replace(verifyInfo, "http://t.me/", "", -1)
 
 	querySql := fmt.Sprintf("where verify_type = '%s' and verify_info ='%s' ", req.VerifyType, verifyInfo)
 	verifyList, err := l.svcCtx.OfficialVerify.CommonFind(l.ctx, querySql, "", "")
@@ -174,7 +174,7 @@ func (l *SeekverifyLogic) telegramUsername(req *types.SeekVerifyRequest) (listVe
 func getRootDoman(str string) string {
 	_, err := regexp.MatchString("(\\w*\\.?){1}\\.(com.cn|net.cn|gov.cn|org\\.nz|org.cn|com|net|org|gov|cc|biz|info|cn|co)$", str)
 	if err != nil {
-		fmt.Println("Match error: ",err.Error())
+		fmt.Println("Match error: ", err.Error())
 	}
 	reg := regexp.MustCompile("(\\w*\\.?){1}\\.(com.cn|net.cn|gov.cn|org\\.nz|org.cn|com|net|org|gov|cc|biz|info|cn|co)$")
 	data := reg.Find([]byte(str))

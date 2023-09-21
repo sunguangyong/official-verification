@@ -38,7 +38,7 @@ func (l *DrupdownLogic) Drupdown(req *types.DropdownRequest) (resp *types.Dropdo
 	//	})
 	//}
 
-	resp.VerifyDropdown = []types.Dropdown {
+	resp.VerifyDropdown = []types.Dropdown{
 		types.Dropdown{
 			Value: "Website",
 			Label: "Website Verification",

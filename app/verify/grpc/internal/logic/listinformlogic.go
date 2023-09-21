@@ -68,13 +68,13 @@ func (l *ListInformLogic) ListInform(in *verify.ListInformRequest) (*verify.List
 
 	if err != nil {
 		l.Logger.Error(err)
-		return resp,err
+		return resp, err
 	}
 
 	fmt.Println("count === ", count)
 
 	if count == 0 {
-		return resp,err
+		return resp, err
 	}
 
 	resp.Count = int32(count)
@@ -82,7 +82,7 @@ func (l *ListInformLogic) ListInform(in *verify.ListInformRequest) (*verify.List
 
 	if err != nil {
 		l.Logger.Error(err)
-		return resp,err
+		return resp, err
 	}
 
 	for _, data := range dataList {
@@ -93,7 +93,6 @@ func (l *ListInformLogic) ListInform(in *verify.ListInformRequest) (*verify.List
 			CreateTime: data.CreateTime.Format("2006-01-02 15:04:05"),
 		})
 	}
-
 
 	return resp, nil
 }

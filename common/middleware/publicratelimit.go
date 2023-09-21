@@ -1,9 +1,10 @@
 package middleware
 
 import (
+	"fmt"
+
 	"cointiger.com/verification/common/constant"
 	"cointiger.com/verification/common/instance"
-	"fmt"
 	"github.com/zeromicro/go-zero/core/logx"
 
 	"cointiger.com/verification/common/req"

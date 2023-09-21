@@ -1,8 +1,9 @@
 package handler
 
 import (
-	"cointiger.com/verification/common/result"
 	"net/http"
+
+	"cointiger.com/verification/common/result"
 
 	"cointiger.com/verification/app/verify/api/internal/logic"
 	"cointiger.com/verification/app/verify/api/internal/svc"

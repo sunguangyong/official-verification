@@ -1,6 +1,10 @@
 package logic
 
 import (
+	"context"
+	"fmt"
+	"strconv"
+
 	"cointiger.com/verification/app/verify/api/internal/svc"
 	"cointiger.com/verification/app/verify/api/internal/types"
 	"cointiger.com/verification/app/verify/model"
@@ -8,13 +12,11 @@ import (
 	"cointiger.com/verification/common/convert"
 	"cointiger.com/verification/common/instance"
 	"cointiger.com/verification/common/jwt"
-	"context"
-	"fmt"
-	"strconv"
 
 	"encoding/json"
-	"github.com/zeromicro/go-zero/core/logx"
 	"strings"
+
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type AddverifyLogic struct {

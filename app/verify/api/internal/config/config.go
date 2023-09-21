@@ -7,14 +7,14 @@ import (
 
 type Config struct {
 	rest.RestConf
-	VerifyRpcConf   zrpc.RpcClientConf
+	VerifyRpcConf zrpc.RpcClientConf
 
 	VerifyMysql struct {
 		DataSource string
 	}
 
 	VerifyRdb struct {
-		Addr  string
+		Addr   string
 		Passwd string
 	}
 }

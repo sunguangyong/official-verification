@@ -1,10 +1,11 @@
 package instance
 
 import (
-	"cointiger.com/verification/common/constant"
 	"fmt"
-	"github.com/zeromicro/go-zero/core/stores/redis"
 	"sync"
+
+	"cointiger.com/verification/common/constant"
+	"github.com/zeromicro/go-zero/core/stores/redis"
 )
 
 var (

@@ -1,9 +1,10 @@
 package xerr
 
 import (
-	"cointiger.com/verification/common/constant"
 	"fmt"
 	"net/http"
+
+	"cointiger.com/verification/common/constant"
 )
 
 /**

@@ -1,8 +1,9 @@
 package logic
 
 import (
-	"cointiger.com/verification/app/verify/model"
 	"context"
+
+	"cointiger.com/verification/app/verify/model"
 
 	"cointiger.com/verification/app/verify/api/internal/svc"
 
