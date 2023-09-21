@@ -22,3 +22,8 @@ Telemetry:
   Endpoint: http://121.91.171.184:14268/api/traces
   Sampler: 1.0
   Batcher: jaeger
+
+Prometheus:
+  Host: 121.91.171.184
+  Port: 9100
+  Path: /metrics
