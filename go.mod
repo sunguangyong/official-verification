@@ -1,10 +1,11 @@
 module cointiger.com/verification
 
-go 1.17
+go 1.18
 
 require (
 	github.com/SkyAPM/go2sky v0.6.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/duke-git/lancet/v2 v2.2.6
 	github.com/pkg/errors v0.9.1
 	github.com/xuri/excelize/v2 v2.6.1
 	github.com/zeromicro/go-zero v1.5.5
@@ -12,7 +13,6 @@ require (
 	golang.org/x/time v0.3.0
 	google.golang.org/grpc v1.57.0
 	google.golang.org/protobuf v1.31.0
-	skywalking.apache.org/repo/goapi v0.0.0-20230712035303-201c1fb2d6ec
 )
 
 require (

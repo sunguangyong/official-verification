@@ -6,7 +6,7 @@ import (
 	"cointiger.com/verification/app/verify/api/internal/svc"
 	"cointiger.com/verification/app/verify/api/internal/types"
 	"cointiger.com/verification/app/verify/grpc/verify"
-
+	"cointiger.com/verification/common/convert"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -25,29 +25,22 @@ func NewListinformLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Listin
 }
 
 func (l *ListinformLogic) Listinform(req *types.ListInformRequest) (resp *types.ListInformResponse, err error) {
-	data, err := l.svcCtx.VerifyRpc.ListInform(l.ctx, &verify.ListInformRequest{
-		VerifyInfo: req.VerifyInfo,
-		PageIndex:  req.PageIndex,
-		PageSize:   req.PageSize,
-		VerifyType: req.VerifyType,
-		SocialName: req.SocialName,
-		StartTime:  req.StartTime,
-		EndTime:    req.EndTime,
-	})
+	var request = &verify.ListInformRequest{}
 
 	resp = &types.ListInformResponse{
 		List:  make([]types.ListInform, 0),
-		Count: int(data.Count),
+		Count: 0,
 	}
 
-	for _, v := range data.List {
-		resp.List = append(resp.List, types.ListInform{
-			VerifyInfo: v.VerifyInfo,
-			VerifyType: v.VerifyType,
-			SocialName: v.SocialName,
-			CreateTime: v.CreateTime,
-		})
+	convert.CopyProperties(request, req)
+
+	data, err := l.svcCtx.VerifyRpc.ListInform(l.ctx, request)
+
+	if err != nil {
+		return
 	}
+
+	convert.CopyProperties(resp, data)
 
 	return
 }
