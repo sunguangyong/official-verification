@@ -7,7 +7,6 @@ import (
 	"reflect"
 )
 
-
 // CopyProperties 将src的字段值赋值到和dst相同的字段
 func CopyProperties(dst, src any) error {
 	dstType, srcType := reflect.TypeOf(dst), reflect.TypeOf(src)

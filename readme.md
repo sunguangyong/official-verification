@@ -50,6 +50,22 @@ goctl api go -api ./api/*.api -dir ./api
 goctl rpc protoc verify.proto --go_out=. --go-grpc_out=. --zrpc_out=.
 ```
 
+``` gateway 添加 rpc 
+1. 在 official-verification 目录下
+protoc --descriptor_set_out=gateway/pb/verify.pb app/verify/grpc/verify.proto
+在 gateway/etc/gateway.yaml 添加配置
+  - Grpc:
+      Target: 0.0.0.0:8080
+    # protoset mode
+    ProtoSets:
+      - ./pb/verify.pb
+    # Mappings can also be written in proto options
+    Mappings:
+      - Method: post
+        Path: /rpc/offical/verify/listinform
+        RpcPath: verify.Verify/ListInform 
+```
+
 ### model生成
 
 ```api
