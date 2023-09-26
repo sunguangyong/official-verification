@@ -5,10 +5,10 @@ VerifyMysql:
   DataSource: root:qIlRn)muX83d@tcp(82.156.56.237:3306)/telegram_bot?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
 
 VerifyRdb:
-  Addr: 121.91.171.184:6379
+  Addr: 127.0.0.1:6379
   Passwd:
 
 Etcd:
   Hosts:
-  - 121.91.171.184:2379
+  - 127.0.0.1:2379
   Key: verify.rpc
