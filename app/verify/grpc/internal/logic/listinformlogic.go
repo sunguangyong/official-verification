@@ -27,6 +27,13 @@ func NewListInformLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ListIn
 
 func (l *ListInformLogic) ListInform(in *verify.ListInformRequest) (*verify.ListInformResponse, error) {
 	var querySql string
+
+	//if md,ok := metadata.FromIncomingContext(l.ctx);ok {
+	//    tmp := md.Get("name")
+	//	fmt.Println("0000000000000",md)
+	//	fmt.Println("1111111111111",tmp)
+	//}
+
 	queryList := make([]string, 0)
 	verifyInfo := in.VerifyInfo
 	verifyType := in.VerifyType

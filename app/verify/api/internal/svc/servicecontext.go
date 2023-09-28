@@ -21,8 +21,10 @@ type ServiceContext struct {
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
-		Config:         c,
-		VeriflyRedis:   redis.New(c.VerifyRdb.Addr, redis.WithPass(c.VerifyRdb.Passwd)),
+		Config:       c,
+		VeriflyRedis: redis.New(c.VerifyRdb.Addr, redis.WithPass(c.VerifyRdb.Passwd)),
+		// 客户端 rpc
+		//VerifyRpc:      verify.NewVerify(zrpc.MustNewClient(c.VerifyRpcConf,zrpc.WithUnaryClientInterceptor(rpcserver.MetadataAppendToOutgoingContextInterceptor))),
 		VerifyRpc:      verify.NewVerify(zrpc.MustNewClient(c.VerifyRpcConf)),
 		OfficialVerify: model.NewOfficialVerifyModel(sqlx.NewMysql(c.VerifyMysql.DataSource)),
 		VerifyEnum:     model.NewVerifyEnumModel(sqlx.NewMysql(c.VerifyMysql.DataSource)),

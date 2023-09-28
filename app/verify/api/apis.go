@@ -33,6 +33,8 @@ func main() {
 	handler.RegisterHandlers(server, ctx)
 	instance.NewRedis(c.VerifyRdb.Addr, c.VerifyRdb.Passwd)
 	server.Use(middleware.PublicRateLimit)
+	server.Use(middleware.JwtAuth)
+
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	server.Start()
 }

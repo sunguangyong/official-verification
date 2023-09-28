@@ -1,5 +1,5 @@
 Name: verify.rpc
-ListenOn: 127.0.0.1:8080
+ListenOn: 0.0.0.0:8080
 
 VerifyMysql:
   DataSource: root:qIlRn)muX83d@tcp(82.156.56.237:3306)/telegram_bot?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai

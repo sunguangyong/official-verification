@@ -4,6 +4,8 @@ import (
 	"flag"
 	"fmt"
 
+	"cointiger.com/verification/common/interceptor/rpcserver"
+
 	"cointiger.com/verification/app/verify/grpc/internal/config"
 	"cointiger.com/verification/app/verify/grpc/internal/server"
 	"cointiger.com/verification/app/verify/grpc/internal/svc"
@@ -16,7 +18,7 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-var configFile = flag.String("f", "etc/verify.yaml", "the config file")
+var configFile = flag.String("f", "./etc/verify.yaml", "the config file")
 
 func main() {
 	flag.Parse()
@@ -33,6 +35,10 @@ func main() {
 			reflection.Register(grpcServer)
 		}
 	})
+
+	s.AddUnaryInterceptors(rpcserver.AuthTokeninterceptor)
+	//s.AddUnaryInterceptors(rpcserver.Interceptors)
+
 	defer s.Stop()
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)

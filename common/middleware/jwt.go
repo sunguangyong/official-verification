@@ -68,7 +68,7 @@ func JwtAuth(next http.HandlerFunc) http.HandlerFunc {
 		var headerKeys []string // 声明请求头keys
 		for k, v := range r.Header {
 			headerKeys = append(headerKeys, k)
-			fmt.Println(k, v)
+			fmt.Println("ppppppppppppp", k, v)
 		}
 		next(w, r)
 	}
