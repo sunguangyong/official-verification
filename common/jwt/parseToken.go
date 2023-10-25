@@ -7,8 +7,8 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-var (
-	SIGN_NAME_SCERET = "abcdefghijklmnopqrstuvwxyz" // 与Java 保持一致
+const (
+	SIGN_NAME_SCERET = "abcdefghijklmnopqrstuvwxyz" // 与Java 保持一致签名密钥
 )
 
 //创建 tokenString
