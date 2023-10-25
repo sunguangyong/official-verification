@@ -18,6 +18,7 @@ func createJwt() (string, error) {
 	claims["foo"] = "bar"
 	claims["exp"] = time.Now().Add(time.Hour * time.Duration(1)).Unix()
 	claims["iat"] = time.Now().Unix()
+	// claims["nbf"] = time.Now().Unix() + 60 // 60 秒后生效
 	token.Claims = claims
 	tokenString, err := token.SignedString([]byte(SIGN_NAME_SCERET))
 	return tokenString, err
@@ -25,7 +26,7 @@ func createJwt() (string, error) {
 
 //验证
 //在调用Parse时，会进行加密验证，同时如果提供了exp，会进行过期验证；
-//如果提供了iat，会进行发行时间验证;如果提供了nbf，会进行发行时间验证．
+//如果提供了iat，会进行发行时间验证;如果提供了nbf，会进行生效时间验证．
 //解析tokenString
 
 func ParseJwt(tokenString string) jwt.MapClaims {
